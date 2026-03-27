@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { listScenes } from "../app/engine/sceneRegistry";
 import useGameStore from "../store/useGameStore";
 import type { Difficulty } from "../app/engine/Scene";
@@ -27,7 +27,13 @@ export function LevelSelectPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center py-16 px-4">
+    <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center py-16 px-4 relative">
+      <Link
+        to="/"
+        className="absolute top-4 left-6 text-slate-400 hover:text-white text-sm transition-colors"
+      >
+        ← Start
+      </Link>
       <h2 className="text-3xl font-bold mb-2">Level auswählen</h2>
       <p className="text-slate-400 mb-10">
         Wähle eine Scene und einen Schwierigkeitsgrad.

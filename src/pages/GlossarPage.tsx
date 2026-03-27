@@ -33,12 +33,16 @@ export function GlossarPage() {
   const activeScene = scenes.find((s) => s.id === activeTab);
   const sceneDiscovered = discoveredPatchIds[activeTab] ?? [];
 
+  const severityOrder = { easy: 0, medium: 1, hard: 2 };
+
   const sortedPatches = activeScene
     ? [...activeScene.patches].sort((a, b) => {
         const aNew = newlyDiscoveredPatchIds.includes(a.id);
         const bNew = newlyDiscoveredPatchIds.includes(b.id);
         if (aNew && !bNew) return -1;
         if (!aNew && bNew) return 1;
+        const severityDiff = severityOrder[a.severity] - severityOrder[b.severity];
+        if (severityDiff !== 0) return severityDiff;
         return a.label.localeCompare(b.label);
       })
     : [];

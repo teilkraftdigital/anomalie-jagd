@@ -14,9 +14,17 @@ export function DebugBar({
   onSceneChange,
   onPatchChange,
 }: Props) {
+  const severityOrder = { easy: 0, medium: 1, hard: 2 };
+
   const scenes = listScenes();
   const scene = scenes.find((s) => s.id === sceneId);
-  const patches = scene ? getScene(sceneId).patches : [];
+  const patches = scene
+    ? [...getScene(sceneId).patches].sort((a, b) => {
+        const severityDiff = severityOrder[a.severity] - severityOrder[b.severity];
+        if (severityDiff !== 0) return severityDiff;
+        return a.label.localeCompare(b.label);
+      })
+    : [];
   const activePatch = patches.find((p) => p.id === patchId) ?? null;
 
   const [debugPanelOpen, setDebugPanelOpen] = useState(true);
