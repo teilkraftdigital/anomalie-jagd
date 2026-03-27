@@ -1,12 +1,22 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { GameLayout } from "../app/layout/GameShell";
 import { Toolbar } from "../app/layout/Toolbar";
-import { getScene } from "../app/engine/sceneRegistry";
+import { DebugBar } from "../app/layout/partials/DebugBar";
+import { getScene, listScenes } from "../app/engine/sceneRegistry";
 import useGameStore from "../store/useGameStore";
 
 export function GamePage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isDebug = searchParams.get("debug") === "true";
+
+  // Debug-local state
+  const scenes = listScenes();
+  const [debugSceneId, setDebugSceneId] = useState(scenes[0]?.id ?? "");
+  const [debugPatchId, setDebugPatchId] = useState<string | null>(null);
+
+  // Game store
   const currentSceneId = useGameStore((s) => s.currentSceneId);
   const activePatchId = useGameStore((s) => s.activePatchId);
   const allPatches = useGameStore((s) => s.allPatches);
@@ -14,36 +24,56 @@ export function GamePage() {
   const lastGuessResult = useGameStore((s) => s.lastGuessResult);
   const clearLastGuessResult = useGameStore((s) => s.clearLastGuessResult);
 
-  // Guard: redirect if no active game
+  // Guard: redirect if no active game (skipped in debug mode)
   useEffect(() => {
-    if (!currentSceneId) navigate("/level-select", { replace: true });
-  }, [currentSceneId]);
+    if (!isDebug && !currentSceneId) navigate("/level-select", { replace: true });
+  }, [currentSceneId, isDebug]);
 
   // Auto-advance after feedback toast
   useEffect(() => {
     if (lastGuessResult === null) return;
     const t = setTimeout(() => {
       clearLastGuessResult();
-      if (currentRound > 6) {
-        navigate("/glossar");
-      }
+      if (currentRound > 6) navigate("/glossar");
     }, 1500);
     return () => clearTimeout(t);
   }, [lastGuessResult]);
 
-  if (!currentSceneId) return null;
+  if (!isDebug && !currentSceneId) return null;
 
-  const scene = getScene(currentSceneId);
+  // Resolve scene + model
+  const sceneId = isDebug ? debugSceneId : currentSceneId!;
+  const scene = getScene(sceneId);
   const baseModel = scene.createBaseModel();
-  const activePatch = activePatchId
-    ? allPatches.find((p) => p.id === activePatchId)
+
+  const resolvedPatchId = isDebug ? debugPatchId : activePatchId;
+  const patchSource = isDebug ? scene.patches : allPatches;
+  const activePatch = resolvedPatchId
+    ? patchSource.find((p) => p.id === resolvedPatchId) ?? null
     : null;
   const model = activePatch ? activePatch.apply(baseModel) : baseModel;
   const SceneRenderer = scene.render;
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col">
-      <Toolbar />
+      {isDebug ? (
+        <DebugBar
+          sceneId={debugSceneId}
+          patchId={debugPatchId}
+          onSceneChange={setDebugSceneId}
+          onPatchChange={setDebugPatchId}
+        />
+      ) : (
+        <Toolbar />
+      )}
+
+      {/* Round 1 hint banner */}
+      {!isDebug && currentRound === 1 && (
+        <div className="bg-blue-50 border-b border-blue-200 text-blue-800 text-sm text-center py-2 px-4">
+          Runde 1: Schau dir die Scene genau an — hier gibt es noch keine Anomalie.
+        </div>
+      )}
+
       <GameLayout>
         <SceneRenderer model={model} />
       </GameLayout>
