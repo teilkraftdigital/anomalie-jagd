@@ -35,6 +35,7 @@ export type GameState = {
   guess: (playerSaidAnomaly: boolean) => void;
   advanceRound: () => void;
   restartGame: () => void;
+  quitGame: () => void;
   clearNewlyDiscovered: () => void;
   clearLastGuessResult: () => void;
 };
@@ -169,6 +170,18 @@ const useGameStore = create<GameState>()(
             get().restartGame();
           }
         },
+
+        quitGame: () =>
+          set({
+            currentSceneId: null,
+            difficulty: null,
+            currentRound: 0,
+            activePatchId: null,
+            patchPool: [],
+            results: [],
+            allPatches: [],
+            lastGuessResult: null,
+          }),
 
         clearNewlyDiscovered: () => set({ newlyDiscoveredPatchIds: [] }),
         clearLastGuessResult: () => set({ lastGuessResult: null }),

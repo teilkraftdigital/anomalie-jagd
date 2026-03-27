@@ -14,6 +14,12 @@ export function StartPage() {
       >
         Spielen
       </Link>
+      <Link
+        to="/glossar"
+        className="mt-4 text-slate-400 hover:text-white text-sm transition-colors"
+      >
+        Glossar ansehen
+      </Link>
     </div>
   );
 }
