@@ -11,20 +11,18 @@ export const patchNoType: Patch<ButtonModel> = {
   apply(model) {
     return {
       ...model,
-      blocks: model.blocks.map((buttonBlock) => ({
-        ...buttonBlock,
-        blocks: [
-          {
-            ...buttonBlock.blocks[0],
-            content: {
-              ...buttonBlock.blocks[0].content,
-              attrs: patchAttrs(buttonBlock.blocks[0].content.attrs, {
-                remove: ["type"],
-              }),
-            },
+      blocks: model.blocks.map((block) => {
+        if (block.type !== "button") return block;
+        return {
+          ...block,
+          content: {
+            ...block.content,
+            attrs: patchAttrs(block.content.attrs, {
+              remove: ["type"],
+            }),
           },
-        ],
-      })),
+        };
+      }),
     };
   },
 };

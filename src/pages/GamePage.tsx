@@ -36,7 +36,8 @@ export function GamePage() {
 
   // Guard: redirect if no active game (skipped in debug mode)
   useEffect(() => {
-    if (!isDebug && !currentSceneId) navigate("/level-select", { replace: true });
+    if (!isDebug && !currentSceneId)
+      navigate("/level-select", { replace: true });
   }, [currentSceneId, isDebug]);
 
   // Auto-advance after feedback toast
@@ -59,7 +60,7 @@ export function GamePage() {
   const resolvedPatchId = isDebug ? debugPatchId : activePatchId;
   const patchSource = isDebug ? scene.patches : allPatches;
   const activePatch = resolvedPatchId
-    ? patchSource.find((p) => p.id === resolvedPatchId) ?? null
+    ? (patchSource.find((p) => p.id === resolvedPatchId) ?? null)
     : null;
   const model = activePatch ? activePatch.apply(baseModel) : baseModel;
   const SceneRenderer = scene.render;
@@ -80,12 +81,16 @@ export function GamePage() {
       {/* Round 1 hint banner */}
       {!isDebug && currentRound === 1 && (
         <div className="bg-blue-50 border-b border-blue-200 text-blue-800 text-sm text-center py-2 px-4">
-          Runde 1: Schau dir die Scene genau an — hier gibt es noch keine Anomalie.
+          Runde 1: Schau dir die Scene genau an — hier gibt es noch keine
+          Anomalie.
         </div>
       )}
 
       <GameLayout>
-        <SceneRenderer model={model} />
+        <SceneRenderer
+          key={isDebug ? `${debugSceneId}-${debugPatchId}` : currentRound}
+          model={model}
+        />
       </GameLayout>
 
       {/* Feedback toast */}

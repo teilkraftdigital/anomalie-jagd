@@ -10,21 +10,19 @@ export const patchTabIndex: Patch<ButtonModel> = {
   apply(model) {
     return {
       ...model,
-      blocks: model.blocks.map((buttonBlock) => ({
-        ...buttonBlock,
-        blocks: [
-          {
-            ...buttonBlock.blocks[0],
-            content: {
-              ...buttonBlock.blocks[0].content,
-              attrs: {
-                ...buttonBlock.blocks[0].content.attrs,
-                tabIndex: -1,
-              },
+      blocks: model.blocks.map((block) => {
+        if (block.type !== "button") return block;
+        return {
+          ...block,
+          content: {
+            ...block.content,
+            attrs: {
+              ...block.content.attrs,
+              tabIndex: -1,
             },
           },
-        ],
-      })),
+        };
+      }),
     };
   },
 };

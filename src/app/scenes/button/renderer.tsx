@@ -8,7 +8,7 @@ export function ButtonSceneRenderer({ model }: { model: ButtonModel }) {
     as: Component = "button",
     attrs,
     onClick,
-  } = model.blocks[0]?.blocks[0]?.content || {};
+  } = model.blocks[0].content;
 
   return (
     <div className="p-4">

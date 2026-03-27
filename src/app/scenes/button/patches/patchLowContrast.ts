@@ -11,24 +11,22 @@ export const patchLowContrast: Patch<ButtonModel> = {
   apply(model) {
     return {
       ...model,
-      blocks: model.blocks.map((buttonBlock) => ({
-        ...buttonBlock,
-        blocks: [
-          {
-            ...buttonBlock.blocks[0],
-            content: {
-              ...buttonBlock.blocks[0].content,
-              attrs: {
-                ...buttonBlock.blocks[0].content.attrs,
-                className: twMerge(
-                  buttonBlock.blocks[0].content.attrs?.className,
-                  "text-blue-300",
-                ),
-              },
+      blocks: model.blocks.map((block) => {
+        if (block.type !== "button") return block;
+        return {
+          ...block,
+          content: {
+            ...block.content,
+            attrs: {
+              ...block.content.attrs,
+              className: twMerge(
+                block.content.attrs?.className,
+                "text-blue-300",
+              ),
             },
           },
-        ],
-      })),
+        };
+      }),
     };
   },
 };
