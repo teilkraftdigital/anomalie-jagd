@@ -44,9 +44,14 @@ export function GamePage() {
   // Auto-advance after feedback toast
   useEffect(() => {
     if (lastGuessResult === null) return;
+    // Game complete — navigate immediately, skip toast
+    if (currentRound > 6) {
+      clearLastGuessResult();
+      navigate("/glossar");
+      return;
+    }
     const t = setTimeout(() => {
       clearLastGuessResult();
-      if (currentRound > 6) navigate("/glossar");
     }, 1500);
     return () => clearTimeout(t);
   }, [lastGuessResult]);
