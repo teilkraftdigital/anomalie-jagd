@@ -2,13 +2,13 @@ import { twMerge } from "tailwind-merge";
 import type { ElementType } from "react";
 import type { ButtonModel } from "./model";
 
-export function ButtonSceneRenderer({ blocks }: { blocks: ButtonModel }) {
+export function ButtonSceneRenderer({ model }: { model: ButtonModel }) {
   const {
     label,
     as: Component = "button",
     attrs,
     onClick,
-  } = blocks.blocks[0]?.blocks[0]?.content || {};
+  } = model.blocks[0]?.blocks[0]?.content || {};
 
   return (
     <div className="p-4">
