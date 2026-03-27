@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
-import type { ButtonModel } from "../model";
+import type { ButtonBlock } from "../model";
 
-export const patchRoleAttribute: Patch<ButtonModel> = {
+export const patchRoleAttribute: Patch<ButtonBlock> = {
   id: "patch-role-attribute",
   label: "Falsches role-Attribut",
   severity: "medium",
@@ -10,18 +10,16 @@ export const patchRoleAttribute: Patch<ButtonModel> = {
   apply(model) {
     return {
       ...model,
-      blocks: model.blocks.map((buttonBlock) => ({
-        ...buttonBlock,
-        blocks: [
-          {
-            ...buttonBlock.blocks[0],
-            content: {
-              ...buttonBlock.blocks[0].content,
-              attrs: { ...buttonBlock.blocks[0].content.attrs, role: "link" },
-            },
+      blocks: model.blocks.map((block) => {
+        if (block.type !== "button") return block;
+        return {
+          ...block,
+          content: {
+            ...block.content,
+            attrs: { ...block.content.attrs, role: "link" },
           },
-        ],
-      })),
+        };
+      }),
     };
   },
-};
+} as const;
