@@ -1,6 +1,13 @@
 import type { HTMLAttributes, ElementType } from "react";
 import type { BaseModel } from "../../engine/models/BaseModel";
 
+export type ValidationRules = {
+  required?: { message?: string };
+  minLength?: { value: number; message?: string };
+  pattern?: { value: string; message?: string };
+  match?: { fieldId: string; message?: string };
+};
+
 export type InputContent = {
   inputType: "text" | "email" | "password" | "checkbox";
   label?: string;
@@ -14,10 +21,13 @@ export type InputContent = {
     attrs?: Record<string, any>;
   };
   checkboxLabel?: string;
+  validation?: ValidationRules;
+  errorDisplay?: "full" | "border-only";
 };
 
 export type FormBlock =
   | { type: "input"; content: InputContent }
+  | { type: "error-summary" }
   | {
       type: "submit";
       content: {

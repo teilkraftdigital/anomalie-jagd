@@ -8,6 +8,8 @@ import { patchNoAutocomplete } from "./patchNoAutocomplete";
 import { patchCheckboxNoName } from "./patchCheckboxNoName";
 import { patchPasswordRevealDiv } from "./patchPasswordRevealDiv";
 import { patchNoAriaDescribedby } from "./patchNoAriaDescribedby";
+import { patchNoErrorSummary } from "./patchNoErrorSummary";
+import { patchErrorBorderOnly } from "./patchErrorBorderOnly";
 
 export const patches: Patch<any>[] = [
   patchNoLabel,
@@ -19,4 +21,6 @@ export const patches: Patch<any>[] = [
   patchCheckboxNoName,
   patchPasswordRevealDiv,
   patchNoAriaDescribedby,
+  patchNoErrorSummary,
+  patchErrorBorderOnly,
 ];

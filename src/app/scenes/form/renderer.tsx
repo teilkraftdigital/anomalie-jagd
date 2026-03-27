@@ -1,11 +1,29 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { FormModel, InputContent } from "./model";
+import { validateForm, type FieldError, type FormValues } from "./validation";
 
-const inputClass =
-  "w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500";
 const labelClass = "block text-sm font-medium text-slate-700 mb-1";
 
-function InputField({ content }: { content: InputContent }) {
+function getInputClass(hasError: boolean, errorDisplay: InputContent["errorDisplay"]) {
+  const base =
+    "w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2";
+  if (hasError) {
+    return `${base} border-red-500 focus:ring-red-500`;
+  }
+  return `${base} border-slate-300 focus:ring-blue-500`;
+}
+
+function InputField({
+  content,
+  value,
+  onChange,
+  error,
+}: {
+  content: InputContent;
+  value: string | boolean;
+  onChange: (val: string | boolean) => void;
+  error?: FieldError;
+}) {
   const [revealed, setRevealed] = useState(false);
   const {
     inputType,
@@ -17,14 +35,33 @@ function InputField({ content }: { content: InputContent }) {
     attrs,
     revealButton,
     checkboxLabel,
+    errorDisplay,
   } = content;
+
+  const hasError = !!error;
+  const showMessage = hasError && errorDisplay !== "border-only";
 
   if (inputType === "checkbox") {
     return (
-      <div className="flex items-center gap-2">
-        <input type="checkbox" required={required} {...attrs} />
-        {checkboxLabel && (
-          <span className="text-sm text-slate-700">{checkboxLabel}</span>
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            required={required}
+            checked={value as boolean}
+            onChange={(e) => onChange(e.target.checked)}
+            aria-invalid={hasError || undefined}
+            aria-describedby={hasError && showMessage ? `${attrs?.id}-error` : undefined}
+            {...attrs}
+          />
+          {checkboxLabel && (
+            <span className="text-sm text-slate-700">{checkboxLabel}</span>
+          )}
+        </div>
+        {showMessage && (
+          <p id={`${attrs?.id}-error`} className="text-xs text-red-600" role="alert">
+            {error!.message}
+          </p>
         )}
       </div>
     );
@@ -33,6 +70,7 @@ function InputField({ content }: { content: InputContent }) {
   const resolvedType =
     inputType === "password" && revealed ? "text" : inputType;
   const RevealAs = revealButton?.as ?? "button";
+  const fieldId = attrs?.id as string | undefined;
 
   return (
     <div className="flex flex-col">
@@ -47,7 +85,18 @@ function InputField({ content }: { content: InputContent }) {
           placeholder={placeholder}
           required={required}
           autoComplete={autocomplete}
-          className={inputClass}
+          className={getInputClass(hasError, errorDisplay)}
+          value={value as string}
+          onChange={(e) => onChange(e.target.value)}
+          aria-invalid={hasError || undefined}
+          aria-describedby={
+            [
+              hasError && showMessage ? `${fieldId}-error` : "",
+              attrs?.["aria-describedby"] ?? "",
+            ]
+              .filter(Boolean)
+              .join(" ") || undefined
+          }
           {...attrs}
         />
         {revealButton && (
@@ -60,9 +109,14 @@ function InputField({ content }: { content: InputContent }) {
           </RevealAs>
         )}
       </div>
-      {attrs?.id === "password-repeat" && (
+      {fieldId === "password-repeat" && (
         <p id="password-hint" className="text-xs text-slate-400 mt-1">
           Muss mit dem obigen Passwort übereinstimmen.
+        </p>
+      )}
+      {showMessage && (
+        <p id={`${fieldId}-error`} className="text-xs text-red-600 mt-1" role="alert">
+          {error!.message}
         </p>
       )}
     </div>
@@ -70,17 +124,78 @@ function InputField({ content }: { content: InputContent }) {
 }
 
 export function FormSceneRenderer({ model }: { model: FormModel }) {
+  const [values, setValues] = useState<FormValues>({});
+  const [errors, setErrors] = useState<FieldError[]>([]);
+  const [submitted, setSubmitted] = useState(false);
+  const summaryRef = useRef<HTMLDivElement>(null);
+
+  const hasErrorSummary = model.blocks.some((b) => b.type === "error-summary");
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const newErrors = validateForm(model.blocks, values);
+    setErrors(newErrors);
+    setSubmitted(true);
+    if (newErrors.length > 0 && hasErrorSummary) {
+      summaryRef.current?.focus();
+    }
+  }
+
+  function getError(id: string) {
+    return errors.find((e) => e.fieldId === id);
+  }
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6 tracking-tight">Registrieren</h2>
-      <form
-        className="flex flex-col gap-4"
-        onSubmit={(e) => e.preventDefault()}
-      >
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
         {model.blocks.map((block, i) => {
-          if (block.type === "input") {
-            return <InputField key={i} content={block.content} />;
+          if (block.type === "error-summary") {
+            if (!submitted || errors.length === 0) return null;
+            return (
+              <div
+                key={i}
+                ref={summaryRef}
+                tabIndex={-1}
+                role="alert"
+                aria-label="Fehlerübersicht"
+                className="border border-red-400 bg-red-50 rounded-lg p-4 text-sm text-red-800 focus:outline-none"
+              >
+                <p className="font-semibold mb-2">
+                  Bitte korrigiere die folgenden Fehler:
+                </p>
+                <ul className="list-disc list-inside flex flex-col gap-1">
+                  {errors.map((err) => (
+                    <li key={err.fieldId}>
+                      <a
+                        href={`#${err.fieldId}`}
+                        className="underline hover:no-underline"
+                      >
+                        {err.message}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
           }
+
+          if (block.type === "input") {
+            const id = block.content.attrs?.id as string | undefined;
+            const error = id ? getError(id) : undefined;
+            return (
+              <InputField
+                key={i}
+                content={block.content}
+                value={values[id ?? ""] ?? (block.content.inputType === "checkbox" ? false : "")}
+                onChange={(val) =>
+                  setValues((prev) => ({ ...prev, [id ?? i]: val }))
+                }
+                error={error}
+              />
+            );
+          }
+
           if (block.type === "submit") {
             return (
               <button
@@ -92,6 +207,7 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
               </button>
             );
           }
+
           return null;
         })}
       </form>
