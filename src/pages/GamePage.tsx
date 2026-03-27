@@ -11,9 +11,13 @@ export function GamePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const isDebug = searchParams.get("debug") === "true";
 
-  // Debug state lives in URL params
+  // Game store
+  const currentSceneId = useGameStore((s) => s.currentSceneId);
+
+  // Debug state lives in URL params; falls back to active game scene
   const scenes = listScenes();
-  const debugSceneId = searchParams.get("scene") ?? scenes[0]?.id ?? "";
+  const debugSceneId =
+    searchParams.get("scene") ?? currentSceneId ?? scenes[0]?.id ?? "";
   const debugPatchId = searchParams.get("patch") ?? null;
 
   function handleDebugSceneChange(sceneId: string) {
@@ -25,9 +29,6 @@ export function GamePage() {
     if (patchId) next.patch = patchId;
     setSearchParams(next);
   }
-
-  // Game store
-  const currentSceneId = useGameStore((s) => s.currentSceneId);
   const activePatchId = useGameStore((s) => s.activePatchId);
   const allPatches = useGameStore((s) => s.allPatches);
   const currentRound = useGameStore((s) => s.currentRound);
