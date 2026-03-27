@@ -5,11 +5,14 @@ import { GamePage } from "./pages/GamePage";
 import { LevelSelectPage } from "./pages/LevelSelectPage";
 import { GlossarPage } from "./pages/GlossarPage";
 import { buttonScene } from "./app/scenes/button";
+import { formScene } from "./app/scenes/form";
 import { sceneRegistry, registerScene } from "./app/engine/sceneRegistry";
 
 // Register scenes at module load time so they are available before first render
 if (!sceneRegistry.has(buttonScene.id))
   registerScene(buttonScene as Scene<any>);
+if (!sceneRegistry.has(formScene.id))
+  registerScene(formScene as Scene<any>);
 
 export default function App() {
   return (
