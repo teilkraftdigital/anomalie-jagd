@@ -9,7 +9,7 @@ export type FieldError = {
 export type FormValues = Record<string, string | boolean>;
 
 function validateField(
-  id: string,
+  _id: string,
   label: string,
   value: string | boolean,
   rules: ValidationRules,

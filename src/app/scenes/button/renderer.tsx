@@ -1,5 +1,3 @@
-import { twMerge } from "tailwind-merge";
-import type { ElementType } from "react";
 import type { ButtonModel } from "./model";
 
 export function ButtonSceneRenderer({ model }: { model: ButtonModel }) {

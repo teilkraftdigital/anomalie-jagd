@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
-import type { ButtonBlock } from "../model";
+import type { ButtonModel } from "../model";
 
-export const patchRoleAttribute: Patch<ButtonBlock> = {
+export const patchRoleAttribute: Patch<ButtonModel> = {
   id: "patch-role-attribute",
   label: "Falsches role-Attribut",
   severity: "medium",
