@@ -12,7 +12,7 @@ npm run lint      # ESLint
 
 ## Architecture
 
-**a11y-hunt** is an educational accessibility game. Players see a simulated web component and must decide each round whether it contains an accessibility anomaly or not.
+**anomalie-jagd** is an educational accessibility game. Players see a simulated web component and must decide each round whether it contains an accessibility anomaly or not.
 
 ### Game loop (6 rounds)
 - Round 1 is always a clean render (no patch); a blue hint banner informs the player

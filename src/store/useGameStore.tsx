@@ -187,7 +187,7 @@ const useGameStore = create<GameState>()(
         clearLastGuessResult: () => set({ lastGuessResult: null }),
       }),
       {
-        name: "game-storage",
+        name: "anomalie-jagd",
         partialize: (state) => ({
           discoveredPatchIds: state.discoveredPatchIds,
         }),
