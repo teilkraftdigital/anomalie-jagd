@@ -51,10 +51,7 @@ export function DebugBar({
               <select
                 id="debug-scene"
                 value={sceneId}
-                onChange={(e) => {
-                  onSceneChange(e.target.value);
-                  onPatchChange(null);
-                }}
+                onChange={(e) => onSceneChange(e.target.value)}
                 className="text-sm rounded px-2 py-1 bg-amber-100 border border-amber-500"
               >
                 {scenes.map((s) => (
