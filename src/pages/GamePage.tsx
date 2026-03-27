@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { GameLayout } from "../app/layout/GameShell";
 import { Toolbar } from "../app/layout/Toolbar";
@@ -8,13 +8,23 @@ import useGameStore from "../store/useGameStore";
 
 export function GamePage() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const isDebug = searchParams.get("debug") === "true";
 
-  // Debug-local state
+  // Debug state lives in URL params
   const scenes = listScenes();
-  const [debugSceneId, setDebugSceneId] = useState(scenes[0]?.id ?? "");
-  const [debugPatchId, setDebugPatchId] = useState<string | null>(null);
+  const debugSceneId = searchParams.get("scene") ?? scenes[0]?.id ?? "";
+  const debugPatchId = searchParams.get("patch") ?? null;
+
+  function handleDebugSceneChange(sceneId: string) {
+    setSearchParams({ debug: "true", scene: sceneId });
+  }
+
+  function handleDebugPatchChange(patchId: string | null) {
+    const next: Record<string, string> = { debug: "true", scene: debugSceneId };
+    if (patchId) next.patch = patchId;
+    setSearchParams(next);
+  }
 
   // Game store
   const currentSceneId = useGameStore((s) => s.currentSceneId);
@@ -60,8 +70,8 @@ export function GamePage() {
         <DebugBar
           sceneId={debugSceneId}
           patchId={debugPatchId}
-          onSceneChange={setDebugSceneId}
-          onPatchChange={setDebugPatchId}
+          onSceneChange={handleDebugSceneChange}
+          onPatchChange={handleDebugPatchChange}
         />
       ) : (
         <Toolbar />
