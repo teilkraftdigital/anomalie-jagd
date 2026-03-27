@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# anomalie jagd
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ein Lernspiel rund um Barrierefreiheit im Web. Spieler:innen sehen eine simulierte Webkomponente und entscheiden pro Runde: Enthält sie eine Accessibility-Anomalie oder nicht?
 
-Currently, two official plugins are available:
+## Spielprinzip
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **6 Runden** pro Spiel
+- Runde 1 ist immer sauber (kein Fehler) — zur Orientierung
+- Runden 2–6: 50/50 — entweder sauber oder eine zufällige Anomalie
+- **Richtig** → nächste Runde
+- **Falsch** → Neustart ab Runde 1
+- Nach Runde 6: Glossar mit allen entdeckten Anomalien
 
-## React Compiler
+Einmal entdeckte Anomalien werden lokal gespeichert und im Glossar angezeigt.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Starten
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+| Befehl | Beschreibung |
+|---|---|
+| `npm run dev` | Vite Dev-Server starten |
+| `npm run build` | Typ-Check + Build |
+| `npm run lint` | ESLint |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Debug-Modus
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Einzelne Anomalien lassen sich direkt über URL-Parameter testen — kein aktives Spiel nötig:
+
 ```
+/spiel?debug=true&scene=button&patch=patch-id
+```
+
+Die URLs sind bookmarkbar.
+
+## Szenen
+
+| Szene | Beschreibung |
+|---|---|
+| Button | Simulierte Button-Komponente (fehlende Labels, falsche Rollen, Kontrast, …) |
+| Formular | Registrierungsformular mit Validierung (fehlende Labels, Autocomplete, Fehlerzusammenfassung, …) |
+
+## Tech Stack
+
+- [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [Zustand](https://zustand-demo.pmnd.rs/) — State Management
+- [Tailwind CSS](https://tailwindcss.com/)
+- [React Router](https://reactrouter.com/)
