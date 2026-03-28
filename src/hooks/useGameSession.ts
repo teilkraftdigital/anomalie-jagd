@@ -23,9 +23,12 @@ export function useGameSession() {
   useEffect(() => {
     if (!isDebug && !currentSceneId)
       navigate("/level-select", { replace: true });
+    // navigate is a stable ref from react-router — safe to omit
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSceneId, isDebug]);
 
-  // Auto-advance after feedback toast
+  // Auto-advance after feedback toast. navigate and clearLastGuessResult are
+  // stable refs; currentRound is read only when lastGuessResult fires.
   useEffect(() => {
     if (lastGuessResult === null) return;
     if (isGameOver(currentRound)) {
@@ -33,10 +36,9 @@ export function useGameSession() {
       navigate("/glossar");
       return;
     }
-    const t = setTimeout(() => {
-      clearLastGuessResult();
-    }, 2000);
+    const t = setTimeout(() => clearLastGuessResult(), 2000);
     return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastGuessResult]);
 
   return {

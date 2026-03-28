@@ -25,11 +25,12 @@ export function GlossarPage() {
   useEffect(() => {
     if (newlyDiscoveredPatchIds.length > 0) {
       setShowToast(true);
-      const t = setTimeout(() => {
-        setShowToast(false);
-      }, 3000);
+      const t = setTimeout(() => setShowToast(false), 3000);
       return () => clearTimeout(t);
     }
+    // newlyDiscoveredPatchIds is intentionally read only on mount — toast shows
+    // the count captured at navigation time, not reactive updates.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const activeScene = scenes.find((s) => s.id === activeTab);

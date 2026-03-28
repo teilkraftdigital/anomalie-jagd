@@ -134,3 +134,9 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 - `src/components/molecules/GlossarTabs.tsx` — Tab-Navigation mit vollständiger ARIA-Semantik
 - `DifficultyCard` und `SceneCard` nach `src/components/molecules/` verschoben
 - `src/app/layout/` vollständig aufgelöst
+
+### Refactoring (Phase 5 — Aufräumen)
+
+- `CLAUDE.md` aktualisiert: neue Ordnerstruktur, Atomic Design Konventionen, Hook-Richtlinie, Engine-Module
+- `plans/refactor-solid-atomic-design.md` als abgeschlossen markiert
+- `src/app/` enthält ausschließlich `engine/` und `scenes/` — keine Layout-Reste
