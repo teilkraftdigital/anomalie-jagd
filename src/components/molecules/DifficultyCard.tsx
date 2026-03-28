@@ -1,4 +1,4 @@
-import type { Difficulty } from "../../engine/Scene";
+import type { Difficulty } from "../../app/engine/Scene";
 
 export type DifficultyCardProps = {
   label: string;

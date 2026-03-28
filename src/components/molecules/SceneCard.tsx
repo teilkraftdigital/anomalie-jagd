@@ -1,4 +1,4 @@
-import type { Scene } from "../../engine/Scene";
+import type { Scene } from "../../app/engine/Scene";
 
 export type SceneCardProps = {
   scene: Pick<Scene<any>, "id" | "name" | "description">;

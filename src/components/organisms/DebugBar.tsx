@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { listScenes, getScene } from "../../engine/sceneRegistry";
+import { listScenes, getScene } from "../../app/engine/sceneRegistry";
 
 type Props = {
   sceneId: string;

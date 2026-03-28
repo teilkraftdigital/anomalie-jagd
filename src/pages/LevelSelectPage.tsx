@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { listScenes } from "../app/engine/sceneRegistry";
 import useGameStore from "../store/useGameStore";
-import DifficultyCard from "../app/layout/partials/DifficultyCard";
-import SceneCard from "../app/layout/partials/SceneCard";
+import DifficultyCard from "../components/molecules/DifficultyCard";
+import SceneCard from "../components/molecules/SceneCard";
 import { type Difficulty, DIFFICULTIES } from "../app/engine/Scene";
 
 export function LevelSelectPage() {

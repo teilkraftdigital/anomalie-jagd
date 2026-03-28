@@ -19,5 +19,15 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // Patch<any> is an intentional architectural choice — the engine uses
+      // open-ended generics to support scenes with different model types.
+      '@typescript-eslint/no-explicit-any': 'off',
+      // Allow _-prefixed parameters to signal intentionally unused args.
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+    },
   },
 ])

@@ -78,7 +78,7 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 
 ---
 
-## [0.2.0] — unveröffentlicht
+## [0.2.0] — 2026-03-28
 
 ### Hinzugefügt
 
@@ -104,3 +104,39 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 - `DIFFICULTIES`-Konstante aus `LevelSelectPage` nach `Scene.ts` verschoben (shared, nicht mehr lokal)
 - Button-Szene: Label und Alert-Text eingedeutscht ("Eine verdächtige Schaltfläche")
 - Passwort-Wiederholung-Feld erhält jetzt einen sichtbaren Hinweistext ("Passwort muss mit dem oberen übereinstimmen") via neuem optionalem `hint`-Feld in `InputContent`
+
+### Refactoring (Phase 1 — Engine aufteilen)
+
+- `poolLogic.ts` — `buildPool` (Undiscovered-First-Logik) und `refillPool` als pure Funktionen
+- `discoveryLogic.ts` — `trackDiscovery` als pure Funktion; neuer Typ `DiscoveredPatchIds`
+- `roundLogic.ts` — `isGameOver`, `pickNextPatch`, Konstanten `GAME_ROUNDS` / `GAME_ANOMALY_CHANCE`
+- `sessionLogic.ts` — `initSession` bündelt Scene-Auflösung, Difficulty-Filter und Pool-Aufbau
+- `useGameStore` delegiert alle Berechnungen an diese Module; enthält keine eigene Spiellogik mehr
+- `rng.ts` bereinigt: ungenutztes `buildPool` entfernt, nur `shuffle` verbleibt
+
+### Refactoring (Phase 2 — Hooks extrahieren)
+
+- `src/hooks/useGameSession.ts` — kapselt Store-Selektoren, Guard-Redirect und Toast-Effekt
+- `src/hooks/useDebugMode.ts` — kapselt URL-Parameter-Logik für den Debug-Modus
+- `GamePage.tsx` ist jetzt eine reine Render-Komponente ohne `useEffect`- oder Store-Logik
+
+### Refactoring (Phase 3 — Organisms einführen)
+
+- `src/components/organisms/` angelegt
+- `Toolbar`, `GameShell`, `DebugBar` aus `src/app/layout/` dorthin verschoben
+- `src/app/layout/` enthält nur noch `partials/` mit `DifficultyCard` und `SceneCard` (folgen in Phase 4)
+
+### Refactoring (Phase 4 — Molecules & Atoms extrahieren)
+
+- `src/components/atoms/SeverityBadge.tsx` — Severity-Label mit easy/medium/hard-Varianten
+- `src/components/atoms/RoundDisplay.tsx` — `<output>`-Element mit Rundenanzeige, nutzt `GAME_ROUNDS`
+- `src/components/molecules/PatchCard.tsx` — Einzelner Patch-Eintrag inkl. `SeverityBadge`
+- `src/components/molecules/GlossarTabs.tsx` — Tab-Navigation mit vollständiger ARIA-Semantik
+- `DifficultyCard` und `SceneCard` nach `src/components/molecules/` verschoben
+- `src/app/layout/` vollständig aufgelöst
+
+### Refactoring (Phase 5 — Aufräumen)
+
+- `CLAUDE.md` aktualisiert: neue Ordnerstruktur, Atomic Design Konventionen, Hook-Richtlinie, Engine-Module
+- `plans/refactor-solid-atomic-design.md` als abgeschlossen markiert
+- `src/app/` enthält ausschließlich `engine/` und `scenes/` — keine Layout-Reste

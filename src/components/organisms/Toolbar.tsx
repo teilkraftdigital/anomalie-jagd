@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useGameStore from "../../store/useGameStore";
+import { RoundDisplay } from "../atoms/RoundDisplay";
 
 export function Toolbar() {
   const navigate = useNavigate();
@@ -26,9 +27,7 @@ export function Toolbar() {
         >
           <span aria-hidden="true">←</span> Aufgeben
         </button>
-        <output className="text-sm font-mono text-slate-400">
-          Runde <span className="text-white font-bold">{currentRound}</span>/6
-        </output>
+        <RoundDisplay currentRound={currentRound} />
       </div>
 
       <div className="flex gap-3">

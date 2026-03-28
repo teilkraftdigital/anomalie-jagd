@@ -1,62 +1,29 @@
-import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { GameLayout } from "../app/layout/GameShell";
-import { Toolbar } from "../app/layout/Toolbar";
-import { DebugBar } from "../app/layout/partials/DebugBar";
-import { getScene, listScenes } from "../app/engine/sceneRegistry";
-import useGameStore from "../store/useGameStore";
+import { GameLayout } from "../components/organisms/GameShell";
+import { Toolbar } from "../components/organisms/Toolbar";
+import { DebugBar } from "../components/organisms/DebugBar";
+import { getScene } from "../app/engine/sceneRegistry";
+import { useGameSession } from "../hooks/useGameSession";
+import { useDebugMode } from "../hooks/useDebugMode";
 
 export function GamePage() {
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const isDebug = searchParams.get("debug") === "true";
+  const {
+    ready,
+    currentSceneId,
+    activePatchId,
+    allPatches,
+    currentRound,
+    lastGuessResult,
+  } = useGameSession();
 
-  // Game store
-  const currentSceneId = useGameStore((s) => s.currentSceneId);
+  const {
+    isDebug,
+    debugSceneId,
+    debugPatchId,
+    handleDebugSceneChange,
+    handleDebugPatchChange,
+  } = useDebugMode();
 
-  // Debug state lives in URL params; falls back to active game scene
-  const scenes = listScenes();
-  const debugSceneId =
-    searchParams.get("scene") ?? currentSceneId ?? scenes[0]?.id ?? "";
-  const debugPatchId = searchParams.get("patch") ?? null;
-
-  function handleDebugSceneChange(sceneId: string) {
-    setSearchParams({ debug: "true", scene: sceneId });
-  }
-
-  function handleDebugPatchChange(patchId: string | null) {
-    const next: Record<string, string> = { debug: "true", scene: debugSceneId };
-    if (patchId) next.patch = patchId;
-    setSearchParams(next);
-  }
-  const activePatchId = useGameStore((s) => s.activePatchId);
-  const allPatches = useGameStore((s) => s.allPatches);
-  const currentRound = useGameStore((s) => s.currentRound);
-  const lastGuessResult = useGameStore((s) => s.lastGuessResult);
-  const clearLastGuessResult = useGameStore((s) => s.clearLastGuessResult);
-
-  // Guard: redirect if no active game (skipped in debug mode)
-  useEffect(() => {
-    if (!isDebug && !currentSceneId)
-      navigate("/level-select", { replace: true });
-  }, [currentSceneId, isDebug]);
-
-  // Auto-advance after feedback toast
-  useEffect(() => {
-    if (lastGuessResult === null) return;
-    // Game complete — navigate immediately, skip toast
-    if (currentRound > 6) {
-      clearLastGuessResult();
-      navigate("/glossar");
-      return;
-    }
-    const t = setTimeout(() => {
-      clearLastGuessResult();
-    }, 2000);
-    return () => clearTimeout(t);
-  }, [lastGuessResult]);
-
-  if (!isDebug && !currentSceneId) return null;
+  if (!ready) return null;
 
   // Resolve scene + model
   const sceneId = isDebug ? debugSceneId : currentSceneId!;

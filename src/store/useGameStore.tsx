@@ -1,12 +1,11 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import type { Difficulty, Patch, Scene } from "../app/engine/Scene";
-import { getScene } from "../app/engine/sceneRegistry";
-import { patchesForDifficulty } from "../app/engine/patchesForDifficulty";
-import { shuffle } from "../app/engine/rng";
-
-const GAME_ROUNDS = 6;
-const GAME_ANOMALY_CHANCE = 0.75;
+import type { Difficulty, Patch } from "../app/engine/Scene";
+import { buildPool } from "../app/engine/poolLogic";
+import { trackDiscovery } from "../app/engine/discoveryLogic";
+import type { DiscoveredPatchIds } from "../app/engine/discoveryLogic";
+import { isGameOver, pickNextPatch } from "../app/engine/roundLogic";
+import { initSession } from "../app/engine/sessionLogic";
 
 type RoundResult = {
   round: number;
@@ -19,7 +18,7 @@ export type GameState = {
   allPatches: Patch<any>[];
 
   // Discovered patch IDs per scene (persisted in localStorage)
-  discoveredPatchIds: Record<string, string[]>;
+  discoveredPatchIds: DiscoveredPatchIds;
 
   // Newly discovered in the last completed game (for glossary highlight)
   newlyDiscoveredPatchIds: string[];
@@ -43,15 +42,6 @@ export type GameState = {
   clearLastGuessResult: () => void;
 };
 
-function buildPool(
-  allPatches: Patch<any>[],
-  discoveredIds: string[],
-): string[] {
-  const undiscovered = allPatches.filter((p) => !discoveredIds.includes(p.id));
-  const source = undiscovered.length > 0 ? undiscovered : allPatches;
-  return shuffle(source.map((p) => p.id));
-}
-
 const useGameStore = create<GameState>()(
   devtools(
     persist(
@@ -68,11 +58,12 @@ const useGameStore = create<GameState>()(
         lastGuessResult: null,
 
         startGame: (sceneId, difficulty) => {
-          const scene = getScene(sceneId) as Scene<any>;
-          const allPatches = patchesForDifficulty(scene.patches, difficulty);
           const discoveredIds = get().discoveredPatchIds[sceneId] ?? [];
-          const pool = buildPool(allPatches, discoveredIds);
-
+          const { allPatches, patchPool } = initSession(
+            sceneId,
+            difficulty,
+            discoveredIds,
+          );
           set({
             currentSceneId: sceneId,
             difficulty,
@@ -80,7 +71,7 @@ const useGameStore = create<GameState>()(
             activePatchId: null,
             results: [],
             allPatches,
-            patchPool: pool,
+            patchPool,
             lastGuessResult: null,
           });
         },
@@ -102,61 +93,46 @@ const useGameStore = create<GameState>()(
             { round: currentRound, patchId: activePatchId, wasCorrect: true },
           ];
 
-          // Mark patch as discovered
-          let newDiscovered = { ...discoveredPatchIds };
-          let newlyDiscovered = [...newlyDiscoveredPatchIds];
-          if (activePatchId && currentSceneId) {
-            const sceneDiscovered = newDiscovered[currentSceneId] ?? [];
-            if (!sceneDiscovered.includes(activePatchId)) {
-              newDiscovered = {
-                ...newDiscovered,
-                [currentSceneId]: [...sceneDiscovered, activePatchId],
-              };
-              newlyDiscovered = [...newlyDiscovered, activePatchId];
-            }
-          }
+          const discovery =
+            activePatchId && currentSceneId
+              ? trackDiscovery(
+                  discoveredPatchIds,
+                  newlyDiscoveredPatchIds,
+                  currentSceneId,
+                  activePatchId,
+                )
+              : { discoveredPatchIds, newlyDiscoveredPatchIds };
 
           const nextRound = currentRound + 1;
 
-          // Game over after GAME_ROUNDS
-          if (nextRound > GAME_ROUNDS) {
+          if (isGameOver(nextRound)) {
             set({
               currentRound: nextRound,
               results: newResults,
-              discoveredPatchIds: newDiscovered,
-              newlyDiscoveredPatchIds: newlyDiscovered,
+              discoveredPatchIds: discovery.discoveredPatchIds,
+              newlyDiscoveredPatchIds: discovery.newlyDiscoveredPatchIds,
             });
             return;
           }
 
-          // Prepare next round: anomaly or clean
-          const hasAnomaly =
-            Math.random() < GAME_ANOMALY_CHANCE && allPatches.length > 0;
-          let nextPatchId: string | null = null;
-          let nextPool = [...patchPool];
-
-          if (hasAnomaly) {
-            if (nextPool.length === 0) {
-              nextPool = shuffle(allPatches.map((p) => p.id));
-            }
-            nextPatchId = nextPool[0];
-            nextPool = nextPool.slice(1);
-          }
+          const { patchId: nextPatchId, pool: nextPool } = pickNextPatch(
+            allPatches,
+            patchPool,
+          );
 
           set({
             currentRound: nextRound,
             activePatchId: nextPatchId,
             patchPool: nextPool,
             results: newResults,
-            discoveredPatchIds: newDiscovered,
-            newlyDiscoveredPatchIds: newlyDiscovered,
+            discoveredPatchIds: discovery.discoveredPatchIds,
+            newlyDiscoveredPatchIds: discovery.newlyDiscoveredPatchIds,
           });
         },
 
         restartGame: () => {
-          const { currentSceneId, difficulty, allPatches, discoveredPatchIds } =
-            get();
-          if (!currentSceneId || !difficulty) return;
+          const { currentSceneId, allPatches, discoveredPatchIds } = get();
+          if (!currentSceneId) return;
 
           const discoveredIds = discoveredPatchIds[currentSceneId] ?? [];
           const pool = buildPool(allPatches, discoveredIds);
