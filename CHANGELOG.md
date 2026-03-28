@@ -113,3 +113,9 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 - `sessionLogic.ts` — `initSession` bündelt Scene-Auflösung, Difficulty-Filter und Pool-Aufbau
 - `useGameStore` delegiert alle Berechnungen an diese Module; enthält keine eigene Spiellogik mehr
 - `rng.ts` bereinigt: ungenutztes `buildPool` entfernt, nur `shuffle` verbleibt
+
+### Refactoring (Phase 2 — Hooks extrahieren)
+
+- `src/hooks/useGameSession.ts` — kapselt Store-Selektoren, Guard-Redirect und Toast-Effekt
+- `src/hooks/useDebugMode.ts` — kapselt URL-Parameter-Logik für den Debug-Modus
+- `GamePage.tsx` ist jetzt eine reine Render-Komponente ohne `useEffect`- oder Store-Logik
