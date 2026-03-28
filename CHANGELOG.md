@@ -78,7 +78,7 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 
 ---
 
-## [0.2.0] — unveröffentlicht
+## [0.2.0] — 2026-03-28
 
 ### Hinzugefügt
 
