@@ -84,24 +84,32 @@ export function GamePage() {
         <Toolbar />
       )}
 
-      {/* Round 1 hint banner */}
-      {!isDebug && currentRound === 1 && (
-        <div className="bg-blue-50 border-b border-blue-200 text-blue-800 text-sm text-center py-2 px-4">
-          Runde 1: Schau dir die Scene genau an — hier gibt es noch keine
-          Anomalie.
-        </div>
-      )}
+      <main>
+        {/* Round 1 hint banner */}
+        {!isDebug && currentRound === 1 && (
+          <div
+            role="status"
+            className="bg-blue-50 border-b border-blue-200 text-blue-800 text-sm text-center py-2 px-4"
+          >
+            Runde 1: Schau dir die Scene genau an — hier gibt es noch keine
+            Anomalie.
+          </div>
+        )}
 
-      <GameLayout>
-        <SceneRenderer
-          key={isDebug ? `${debugSceneId}-${debugPatchId}` : currentRound}
-          model={model}
-        />
-      </GameLayout>
+        <GameLayout>
+          <SceneRenderer
+            key={isDebug ? `${debugSceneId}-${debugPatchId}` : currentRound}
+            model={model}
+          />
+        </GameLayout>
+      </main>
 
       {/* Feedback toast */}
       {lastGuessResult !== null && (
-        <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
+        <div
+          role="alert"
+          className="fixed inset-0 flex items-center justify-center pointer-events-none"
+        >
           <div
             className={`text-white text-2xl font-bold px-8 py-4 rounded-2xl shadow-xl ${
               lastGuessResult === "correct" ? "bg-green-600" : "bg-red-600"

@@ -17,17 +17,18 @@ export function Toolbar() {
   }
 
   return (
-    <div className="bg-slate-900 text-white px-6 py-3 flex items-center justify-between">
+    <header className="bg-slate-900 text-white px-6 py-3 flex items-center justify-between">
       <div className="flex items-center gap-4">
         <button
           onClick={handleQuit}
+          aria-label="Aufgeben"
           className="text-slate-400 hover:text-white text-sm transition-colors"
         >
-          ← Aufgeben
+          <span aria-hidden="true">←</span> Aufgeben
         </button>
-        <p className="text-sm font-mono text-slate-400">
+        <output className="text-sm font-mono text-slate-400">
           Runde <span className="text-white font-bold">{currentRound}</span>/6
-        </p>
+        </output>
       </div>
 
       <div className="flex gap-3">
@@ -50,6 +51,6 @@ export function Toolbar() {
       <span className="text-sm text-slate-400 capitalize">
         {difficulty ?? "–"}
       </span>
-    </div>
+    </header>
   );
 }
