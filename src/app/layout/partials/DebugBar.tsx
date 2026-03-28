@@ -39,65 +39,63 @@ export function DebugBar({
           onClick={() => setDebugPanelOpen((open) => !open)}
           className="text-xs text-slate-900 bg-amber-200 rounded px-2 py-1"
           aria-expanded={debugPanelOpen}
-          aira-controls="debug-panel"
+          aria-controls="debug-panel"
         >
           {debugPanelOpen ? "einklappen" : "ausklappen"}
         </button>
       </div>
 
-      {debugPanelOpen && (
-        <>
-          <div
-            id="debug-panel"
-            className=" border-t border-yellow-600 flex flex-wrap gap-4 pt-1.5"
-          >
-            <div className="flex flex-col gap-1">
-              <label className="text-yellow-900 text-sm" htmlFor="debug-scene">
-                Scene
-              </label>
-
-              <select
-                id="debug-scene"
-                value={sceneId}
-                onChange={(e) => onSceneChange(e.target.value)}
-                className="text-sm rounded px-2 py-1 bg-amber-100 border border-amber-500"
-              >
-                {scenes.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label className="text-yellow-900 text-sm" htmlFor="debug-patch">
-                Patch
-              </label>
-              <select
-                id="debug-patch"
-                value={patchId ?? ""}
-                onChange={(e) => onPatchChange(e.target.value || null)}
-                className="text-sm rounded px-2 py-1 bg-amber-100 border border-amber-500"
-              >
-                <option value="">— Kein Patch (clean) —</option>
-                {patches.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    [{p.severity}] {p.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+      <div
+        id="debug-panel"
+        hidden={!debugPanelOpen}
+        className="flex flex-col gap-2"
+      >
+        <div className="border-t border-yellow-600 flex flex-wrap gap-4 pt-1.5">
+          <div className="flex flex-col gap-1">
+            <label className="text-yellow-900 text-sm" htmlFor="debug-scene">
+              Scene
+            </label>
+            <select
+              id="debug-scene"
+              value={sceneId}
+              onChange={(e) => onSceneChange(e.target.value)}
+              className="text-sm rounded px-2 py-1 bg-amber-100 border border-amber-500"
+            >
+              {scenes.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}
+                </option>
+              ))}
+            </select>
           </div>
 
-          {activePatch && (
-            <div className="text-xs bg-amber-200 rounded px-3 py-2 flex gap-1 flex-col">
-              <span className="font-mono font-bold">Erklärung</span>
-              <span className="opacity-70">{activePatch.explanation}</span>
-            </div>
-          )}
-        </>
-      )}
+          <div className="flex flex-col gap-1">
+            <label className="text-yellow-900 text-sm" htmlFor="debug-patch">
+              Patch
+            </label>
+            <select
+              id="debug-patch"
+              value={patchId ?? ""}
+              onChange={(e) => onPatchChange(e.target.value || null)}
+              className="text-sm rounded px-2 py-1 bg-amber-100 border border-amber-500"
+            >
+              <option value="">— Kein Patch (clean) —</option>
+              {patches.map((p) => (
+                <option key={p.id} value={p.id}>
+                  [{p.severity}] {p.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {activePatch && (
+          <div className="text-xs bg-amber-200 rounded px-3 py-2 flex gap-1 flex-col">
+            <span className="font-mono font-bold">Erklärung</span>
+            <span className="opacity-70">{activePatch.explanation}</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
