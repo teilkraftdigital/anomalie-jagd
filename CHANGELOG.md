@@ -119,3 +119,9 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 - `src/hooks/useGameSession.ts` — kapselt Store-Selektoren, Guard-Redirect und Toast-Effekt
 - `src/hooks/useDebugMode.ts` — kapselt URL-Parameter-Logik für den Debug-Modus
 - `GamePage.tsx` ist jetzt eine reine Render-Komponente ohne `useEffect`- oder Store-Logik
+
+### Refactoring (Phase 3 — Organisms einführen)
+
+- `src/components/organisms/` angelegt
+- `Toolbar`, `GameShell`, `DebugBar` aus `src/app/layout/` dorthin verschoben
+- `src/app/layout/` enthält nur noch `partials/` mit `DifficultyCard` und `SceneCard` (folgen in Phase 4)

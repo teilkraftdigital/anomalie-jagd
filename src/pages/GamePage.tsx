@@ -1,6 +1,6 @@
-import { GameLayout } from "../app/layout/GameShell";
-import { Toolbar } from "../app/layout/Toolbar";
-import { DebugBar } from "../app/layout/partials/DebugBar";
+import { GameLayout } from "../components/organisms/GameShell";
+import { Toolbar } from "../components/organisms/Toolbar";
+import { DebugBar } from "../components/organisms/DebugBar";
 import { getScene } from "../app/engine/sceneRegistry";
 import { useGameSession } from "../hooks/useGameSession";
 import { useDebugMode } from "../hooks/useDebugMode";
