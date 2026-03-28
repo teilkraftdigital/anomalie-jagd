@@ -104,3 +104,12 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 - `DIFFICULTIES`-Konstante aus `LevelSelectPage` nach `Scene.ts` verschoben (shared, nicht mehr lokal)
 - Button-Szene: Label und Alert-Text eingedeutscht ("Eine verdächtige Schaltfläche")
 - Passwort-Wiederholung-Feld erhält jetzt einen sichtbaren Hinweistext ("Passwort muss mit dem oberen übereinstimmen") via neuem optionalem `hint`-Feld in `InputContent`
+
+### Refactoring (Phase 1 — Engine aufteilen)
+
+- `poolLogic.ts` — `buildPool` (Undiscovered-First-Logik) und `refillPool` als pure Funktionen
+- `discoveryLogic.ts` — `trackDiscovery` als pure Funktion; neuer Typ `DiscoveredPatchIds`
+- `roundLogic.ts` — `isGameOver`, `pickNextPatch`, Konstanten `GAME_ROUNDS` / `GAME_ANOMALY_CHANCE`
+- `sessionLogic.ts` — `initSession` bündelt Scene-Auflösung, Difficulty-Filter und Pool-Aufbau
+- `useGameStore` delegiert alle Berechnungen an diese Module; enthält keine eigene Spiellogik mehr
+- `rng.ts` bereinigt: ungenutztes `buildPool` entfernt, nur `shuffle` verbleibt
