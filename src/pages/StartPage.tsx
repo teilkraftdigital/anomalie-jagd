@@ -54,7 +54,13 @@ export function StartPage() {
       </Link>
 
       <footer className="absolute bottom-4 text-slate-400 text-xs font-mono">
-        v{__APP_VERSION__}
+        v{__APP_VERSION__} - Ein Projekt von{" "}
+        <a
+          href="https://teilkraft.digital?utm_source=anomalie-jagd"
+          className="underline hover:text-white"
+        >
+          teil:kraft digital
+        </a>
       </footer>
     </div>
   );
