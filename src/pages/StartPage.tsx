@@ -52,6 +52,10 @@ export function StartPage() {
       >
         Glossar ansehen
       </Link>
+
+      <footer className="absolute bottom-4 text-slate-600 text-xs font-mono">
+        v{__APP_VERSION__}
+      </footer>
     </div>
   );
 }
