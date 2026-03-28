@@ -15,6 +15,7 @@ export type InputContent = {
   placeholder?: string;
   required?: boolean;
   autocomplete?: string;
+  hint?: string;
   attrs?: HTMLAttributes<HTMLInputElement> & Record<string, any>;
   revealButton?: {
     as?: ElementType;

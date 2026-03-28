@@ -18,7 +18,10 @@ export const formScene: FormModel = {
         attrs: { id: "name" },
         validation: {
           required: { message: "Bitte gib deinen Namen ein." },
-          minLength: { value: 2, message: "Name muss mindestens 2 Zeichen lang sein." },
+          minLength: {
+            value: 2,
+            message: "Name muss mindestens 2 Zeichen lang sein.",
+          },
         },
       },
     },
@@ -57,7 +60,10 @@ export const formScene: FormModel = {
         },
         validation: {
           required: { message: "Bitte gib ein Passwort ein." },
-          minLength: { value: 8, message: "Passwort muss mindestens 8 Zeichen lang sein." },
+          minLength: {
+            value: 8,
+            message: "Passwort muss mindestens 8 Zeichen lang sein.",
+          },
         },
       },
     },
@@ -71,6 +77,7 @@ export const formScene: FormModel = {
         placeholder: "••••••••",
         autocomplete: "new-password",
         attrs: { id: "password-repeat", "aria-describedby": "password-hint" },
+        hint: "Passwort muss mit dem oberen übereinstimmen.",
         revealButton: {
           as: "button",
           attrs: { type: "button", "aria-label": "Passwort anzeigen" },

@@ -14,17 +14,20 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 ### Hinzugefügt
 
 **Game Loop**
+
 - 6-Runden-Spielablauf: Runde 1 immer sauber (mit Hinweis-Banner), Runden 2–6 zufällig sauber oder mit einer Anomalie
 - Korrekte Antwort → nächste Runde; falsche Antwort → Neustart ab Runde 1 mit neu gemischtem Pool
 - Nach Runde 6: Navigation zum Glossar mit Hervorhebung neu entdeckter Anomalien
 - `newlyDiscoveredPatchIds` akkumuliert über Neustarts hinweg; wird erst beim Glossar-Aufruf geleert
 
 **Pool-Mechanik**
+
 - `patchPool` mit Undiscovered-First-Logik: noch nicht entdeckte Anomalien kommen zuerst
 - Pool leert sich pro Zyklus (jede Anomalie max. einmal), danach automatisches Neubefüllen
 - `discoveredPatchIds` wird in localStorage persistiert
 
 **Szene: Button** (5 Anomalien)
+
 - `patchDivButton` — Button als `<div>` statt `<button>` (schwer)
 - `patchNoLabel` — Button ohne sichtbares Label (schwer)
 - `patchTabIndex` — `tabindex="-1"` entfernt den Button aus dem Fokus (mittel)
@@ -33,6 +36,7 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 - `patchRoleAttribute` — falsches `role`-Attribut (mittel)
 
 **Szene: Registrierungsformular** (11 Anomalien)
+
 - `patchNoLabel` — Eingabefeld ohne `<label>` (schwer)
 - `patchLabelNotLinked` — Label nicht mit `for`/`id` verknüpft (mittel)
 - `patchNoRequired` — Pflichtfeld ohne `required`-Attribut (leicht)
@@ -46,11 +50,13 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 - `patchErrorBorderOnly` — Fehler nur durch roten Rand signalisiert, kein Text (mittel)
 
 **Schwierigkeitsgrade**
+
 - Leicht: nur Anomalien der Stufe `easy`
 - Mittel: `easy` + `medium`
 - Schwer: alle Anomalien
 
 **Seiten & Navigation**
+
 - Startseite mit Spielbeschreibung und -anleitung
 - Level-Auswahl: Szene und Schwierigkeitsgrad wählbar
 - Spielseite mit Toolbar (Anomalie/Kein Fehler, Aufgeben, Glossar-Link)
@@ -58,11 +64,13 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 - Zurück-Link von Level-Auswahl zur Startseite
 
 **Debug-Modus**
+
 - `/spiel?debug=true&scene=...&patch=...` — Szene und Patch per URL-Parameter steuerbar
 - DebugBar ersetzt die Toolbar; URLs sind bookmarkbar
 - Kein aktiver Spielstand nötig
 
 **Technische Grundlagen**
+
 - Szenen-/Patch-System (`Scene<TModel>`, `Patch<TModel>`) mit `sceneRegistry`
 - Zustand-Store (Zustand) mit devtools; nur `discoveredPatchIds` persistiert
 - React Router v7, React 19, Tailwind CSS v4
@@ -73,16 +81,26 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 ## [0.2.0] — unveröffentlicht
 
 ### Hinzugefügt
+
 - Versionsnummer wird dezent auf der Startseite angezeigt (aus `package.json`, zur Build-Zeit injiziert)
 
 ### Verbessert
+
 - Semantic HTML und ARIA-Rollen in allen Seiten und Layout-Komponenten:
   - `GameShell`: `div` → `section[aria-label]`, dekorative Elemente `aria-hidden`
   - `Toolbar`: `div` → `header`, Rundenanzeige `p` → `output`, Pfeil `aria-hidden`
-  - `GamePage`: `main`-Wrapper, `role="status"` auf Hinweis-Banner, `role="alert"` auf Feedback-Toast
+  - `GamePage`: `main`-Wrapper, `role="status"` auf Hinweis-Banner, `role="status"` auf Feedback-Toast
   - `GlossarPage`: `div` → `header`, `role="tablist/tab/tabpanel"`, Toast `role="status"`, Patch-Liste `ul/li`
   - `LevelSelectPage`: `main`-Wrapper, Überschriften auf `h2` korrigiert, Rücklink in `nav`, Schwierigkeitsgrad-Buttons als Radio-Inputs mit `label`
 
 ### Behoben
+
 - `aira-controls`-Tippfehler in `DebugBar` (war ein stilles No-op; Screenreader konnten das Panel nicht finden)
 - `DebugBar`-Panel nutzt jetzt `hidden`-Attribut statt bedingtem Render — Panel bleibt im DOM und ist für assistive Technologien zugänglich
+
+### Geändert
+
+- Anomalie-Wahrscheinlichkeit pro Runde von 50 % auf 75 % erhöht — sorgt für mehr Trainingsmomente pro Spieldurchlauf
+- `DIFFICULTIES`-Konstante aus `LevelSelectPage` nach `Scene.ts` verschoben (shared, nicht mehr lokal)
+- Button-Szene: Label und Alert-Text eingedeutscht ("Eine verdächtige Schaltfläche")
+- Passwort-Wiederholung-Feld erhält jetzt einen sichtbaren Hinweistext ("Passwort muss mit dem oberen übereinstimmen") via neuem optionalem `hint`-Feld in `InputContent`

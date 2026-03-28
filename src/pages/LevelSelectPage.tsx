@@ -2,25 +2,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { listScenes } from "../app/engine/sceneRegistry";
 import useGameStore from "../store/useGameStore";
-import type { Difficulty } from "../app/engine/Scene";
-
-const DIFFICULTIES: {
-  value: Difficulty;
-  label: string;
-  description: string;
-}[] = [
-  {
-    value: "easy",
-    label: "Easy",
-    description: "Nur offensichtliche Anomalien",
-  },
-  {
-    value: "medium",
-    label: "Medium",
-    description: "Easy + mittelschwere Anomalien",
-  },
-  { value: "hard", label: "Hard", description: "Alle Anomalien" },
-];
+import DifficultyCard from "../app/layout/partials/DifficultyCard";
+import SceneCard from "../app/layout/partials/SceneCard";
+import { type Difficulty, DIFFICULTIES } from "../app/engine/Scene";
 
 export function LevelSelectPage() {
   const navigate = useNavigate();
@@ -38,6 +22,11 @@ export function LevelSelectPage() {
     startGame(selectedSceneId, selectedDifficulty);
     navigate("/spiel");
   }
+
+  const handleSceneClick = (sceneId: string) => {
+    setSelectedSceneId(sceneId);
+    setSelectedDifficulty(null);
+  };
 
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center py-16 px-4 relative">
@@ -67,26 +56,13 @@ export function LevelSelectPage() {
               const isSelected = selectedSceneId === scene.id;
 
               return (
-                <button
-                  key={scene.id}
-                  onClick={() => {
-                    setSelectedSceneId(scene.id);
-                    setSelectedDifficulty(null);
-                  }}
-                  className={`text-left rounded-xl border px-5 py-4 transition-all ${
-                    isSelected
-                      ? "border-white bg-slate-700"
-                      : "border-slate-600 bg-slate-800 hover:bg-slate-700"
-                  }`}
-                >
-                  <div className="font-bold text-lg">{scene.name}</div>
-                  <div className="text-slate-400 text-sm mt-0.5">
-                    {scene.description}
-                  </div>
-                  <div className="text-slate-500 text-xs mt-2 font-mono">
-                    {discovered}/{total} Anomalien entdeckt
-                  </div>
-                </button>
+                <SceneCard
+                  scene={scene}
+                  isSelected={isSelected}
+                  discovered={discovered}
+                  total={total}
+                  onClick={handleSceneClick}
+                />
               );
             })}
           </div>
@@ -102,28 +78,14 @@ export function LevelSelectPage() {
               {DIFFICULTIES.map(({ value, label, description }) => {
                 const isSelected = selectedDifficulty === value;
                 return (
-                  <label
-                    className={`text-left rounded-xl border px-4 py-3 transition-all ${
-                      isSelected
-                        ? "border-white bg-slate-700"
-                        : "border-slate-600 bg-slate-800 hover:bg-slate-700"
-                    }`}
-                  >
-                    <div className="font-bold">{label}</div>
-                    <div className="text-slate-400 text-xs mt-1">
-                      {description}
-                    </div>
-                    <input
-                      type="radio"
-                      id={`difficulty-${value}`}
-                      name="difficulty"
-                      value={value}
-                      checked={isSelected}
-                      key={value}
-                      onChange={() => setSelectedDifficulty(value)}
-                      className="w-0 h-0 opacity-0 absolute"
-                    ></input>
-                  </label>
+                  <DifficultyCard
+                    key={value}
+                    label={label}
+                    description={description}
+                    value={value}
+                    isSelected={isSelected}
+                    onChange={(val) => setSelectedDifficulty(val)}
+                  />
                 );
               })}
             </div>

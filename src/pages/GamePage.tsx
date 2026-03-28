@@ -52,7 +52,7 @@ export function GamePage() {
     }
     const t = setTimeout(() => {
       clearLastGuessResult();
-    }, 1500);
+    }, 2000);
     return () => clearTimeout(t);
   }, [lastGuessResult]);
 
@@ -107,7 +107,7 @@ export function GamePage() {
       {/* Feedback toast */}
       {lastGuessResult !== null && (
         <div
-          role="alert"
+          role="status"
           className="fixed inset-0 flex items-center justify-center pointer-events-none"
         >
           <div

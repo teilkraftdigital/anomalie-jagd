@@ -5,6 +5,9 @@ import { getScene } from "../app/engine/sceneRegistry";
 import { patchesForDifficulty } from "../app/engine/patchesForDifficulty";
 import { shuffle } from "../app/engine/rng";
 
+const GAME_ROUNDS = 6;
+const GAME_ANOMALY_CHANCE = 0.75;
+
 type RoundResult = {
   round: number;
   patchId: string | null;
@@ -115,8 +118,8 @@ const useGameStore = create<GameState>()(
 
           const nextRound = currentRound + 1;
 
-          // Game over after round 6
-          if (nextRound > 6) {
+          // Game over after GAME_ROUNDS
+          if (nextRound > GAME_ROUNDS) {
             set({
               currentRound: nextRound,
               results: newResults,
@@ -126,8 +129,9 @@ const useGameStore = create<GameState>()(
             return;
           }
 
-          // Prepare next round: 50/50 anomaly or clean
-          const hasAnomaly = Math.random() < 0.5 && allPatches.length > 0;
+          // Prepare next round: anomaly or clean
+          const hasAnomaly =
+            Math.random() < GAME_ANOMALY_CHANCE && allPatches.length > 0;
           let nextPatchId: string | null = null;
           let nextPool = [...patchPool];
 
@@ -157,7 +161,12 @@ const useGameStore = create<GameState>()(
           const discoveredIds = discoveredPatchIds[currentSceneId] ?? [];
           const pool = buildPool(allPatches, discoveredIds);
 
-          set({ currentRound: 1, activePatchId: null, results: [], patchPool: pool });
+          set({
+            currentRound: 1,
+            activePatchId: null,
+            results: [],
+            patchPool: pool,
+          });
         },
 
         guess: (playerSaidAnomaly) => {

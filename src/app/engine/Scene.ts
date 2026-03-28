@@ -29,3 +29,21 @@ export type Scene<TModel> = {
   // React Renderer für das Modell
   render: ComponentType<{ model: TModel }>;
 };
+
+export const DIFFICULTIES: {
+  value: Difficulty;
+  label: string;
+  description: string;
+}[] = [
+  {
+    value: "easy",
+    label: "Easy",
+    description: "Nur offensichtliche Anomalien",
+  },
+  {
+    value: "medium",
+    label: "Medium",
+    description: "Easy + mittelschwere Anomalien",
+  },
+  { value: "hard", label: "Hard", description: "Alle Anomalien" },
+];

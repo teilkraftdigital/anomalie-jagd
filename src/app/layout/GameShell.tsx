@@ -14,7 +14,7 @@ export function GameLayout({ children }: { children: ReactNode }) {
             <span className="w-3 h-3 rounded-full bg-green-400 block" />
           </div>
           <div
-            className="flex-1 bg-white rounded px-3 py-1 text-xs text-slate-400 font-mono"
+            className="flex-1 bg-white rounded px-3 py-1 text-xs text-slate-500 font-mono select-none"
             aria-hidden="true"
           >
             https://anomalie-jagd.local

@@ -6,8 +6,8 @@ export const buttonScene: ButtonModel = {
     {
       type: "button",
       content: {
-        label: "Click me",
-        onClick: () => alert("Button clicked!"),
+        label: "Eine verdächtige Schaltfläche",
+        onClick: () => alert("Schaltfläche geklickt!"),
         as: "button",
         attrs: {
           type: "button",

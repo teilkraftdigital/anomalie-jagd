@@ -4,13 +4,16 @@ import { validateForm, type FieldError, type FormValues } from "./validation";
 
 const labelClass = "block text-sm font-medium text-slate-700 mb-1";
 
-function getInputClass(hasError: boolean, _errorDisplay: InputContent["errorDisplay"]) {
+function getInputClass(
+  hasError: boolean,
+  _errorDisplay: InputContent["errorDisplay"],
+) {
   const base =
-    "w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2";
+    "w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 placeholder-slate-500/80";
   if (hasError) {
     return `${base} border-red-500 focus:ring-red-500`;
   }
-  return `${base} border-slate-300 focus:ring-blue-500`;
+  return `${base} border-slate-400 focus:ring-blue-500`;
 }
 
 function InputField({
@@ -44,14 +47,16 @@ function InputField({
   if (inputType === "checkbox") {
     return (
       <div className="flex flex-col gap-1">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ">
           <input
             type="checkbox"
             required={required}
             checked={value as boolean}
             onChange={(e) => onChange(e.target.checked)}
             aria-invalid={hasError || undefined}
-            aria-describedby={hasError && showMessage ? `${attrs?.id}-error` : undefined}
+            aria-describedby={
+              hasError && showMessage ? `${attrs?.id}-error` : undefined
+            }
             {...attrs}
           />
           {checkboxLabel && (
@@ -59,7 +64,11 @@ function InputField({
           )}
         </div>
         {showMessage && (
-          <p id={`${attrs?.id}-error`} className="text-xs text-red-600" role="alert">
+          <p
+            id={`${attrs?.id}-error`}
+            className="text-xs text-red-600"
+            role="alert"
+          >
             {error!.message}
           </p>
         )}
@@ -92,6 +101,7 @@ function InputField({
           aria-describedby={
             [
               hasError && showMessage ? `${fieldId}-error` : "",
+              content.hint ? `${fieldId}-hint` : "",
               attrs?.["aria-describedby"] ?? "",
             ]
               .filter(Boolean)
@@ -109,13 +119,17 @@ function InputField({
           </RevealAs>
         )}
       </div>
-      {fieldId === "password-repeat" && (
-        <p id="password-hint" className="text-xs text-slate-400 mt-1">
-          Muss mit dem obigen Passwort übereinstimmen.
+      {content.hint && (
+        <p id={`${fieldId}-hint`} className="text-xs text-slate-500 mt-1">
+          {content.hint}
         </p>
       )}
       {showMessage && (
-        <p id={`${fieldId}-error`} className="text-xs text-red-600 mt-1" role="alert">
+        <p
+          id={`${fieldId}-error`}
+          className="text-xs text-red-600 mt-1"
+          role="alert"
+        >
           {error!.message}
         </p>
       )}
@@ -187,7 +201,10 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
               <InputField
                 key={i}
                 content={block.content}
-                value={values[id ?? ""] ?? (block.content.inputType === "checkbox" ? false : "")}
+                value={
+                  values[id ?? ""] ??
+                  (block.content.inputType === "checkbox" ? false : "")
+                }
                 onChange={(val) =>
                   setValues((prev) => ({ ...prev, [id ?? i]: val }))
                 }
