@@ -70,6 +70,19 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 
 ---
 
-## [Unveröffentlicht]
+## [0.2.0] — unveröffentlicht
 
-*(Hier landen Änderungen, die noch keiner Version zugewiesen sind)*
+### Hinzugefügt
+- Versionsnummer wird dezent auf der Startseite angezeigt (aus `package.json`, zur Build-Zeit injiziert)
+
+### Verbessert
+- Semantic HTML und ARIA-Rollen in allen Seiten und Layout-Komponenten:
+  - `GameShell`: `div` → `section[aria-label]`, dekorative Elemente `aria-hidden`
+  - `Toolbar`: `div` → `header`, Rundenanzeige `p` → `output`, Pfeil `aria-hidden`
+  - `GamePage`: `main`-Wrapper, `role="status"` auf Hinweis-Banner, `role="alert"` auf Feedback-Toast
+  - `GlossarPage`: `div` → `header`, `role="tablist/tab/tabpanel"`, Toast `role="status"`, Patch-Liste `ul/li`
+  - `LevelSelectPage`: `main`-Wrapper, Überschriften auf `h2` korrigiert, Rücklink in `nav`, Schwierigkeitsgrad-Buttons als Radio-Inputs mit `label`
+
+### Behoben
+- `aira-controls`-Tippfehler in `DebugBar` (war ein stilles No-op; Screenreader konnten das Panel nicht finden)
+- `DebugBar`-Panel nutzt jetzt `hidden`-Attribut statt bedingtem Render — Panel bleibt im DOM und ist für assistive Technologien zugänglich
