@@ -125,3 +125,12 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 - `src/components/organisms/` angelegt
 - `Toolbar`, `GameShell`, `DebugBar` aus `src/app/layout/` dorthin verschoben
 - `src/app/layout/` enthält nur noch `partials/` mit `DifficultyCard` und `SceneCard` (folgen in Phase 4)
+
+### Refactoring (Phase 4 — Molecules & Atoms extrahieren)
+
+- `src/components/atoms/SeverityBadge.tsx` — Severity-Label mit easy/medium/hard-Varianten
+- `src/components/atoms/RoundDisplay.tsx` — `<output>`-Element mit Rundenanzeige, nutzt `GAME_ROUNDS`
+- `src/components/molecules/PatchCard.tsx` — Einzelner Patch-Eintrag inkl. `SeverityBadge`
+- `src/components/molecules/GlossarTabs.tsx` — Tab-Navigation mit vollständiger ARIA-Semantik
+- `DifficultyCard` und `SceneCard` nach `src/components/molecules/` verschoben
+- `src/app/layout/` vollständig aufgelöst
