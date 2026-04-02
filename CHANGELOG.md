@@ -5,6 +5,17 @@ Alle nennenswerten Änderungen am Projekt werden in dieser Datei dokumentiert.
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 Versionierung folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.4.2] — 2026-04-02
+
+### Verbessert
+
+- Shiki: `codeToHtml()` durch `createHighlighterCore()` + `createJavaScriptRegexEngine()` mit expliziten Imports ersetzt (`shiki/langs/html.mjs`, `shiki/themes/github-light.mjs`) — nur HTML-Grammatik und github-light-Theme im Bundle statt alle ~50 Sprachen
+- Shiki: statische Imports → dynamische `import()` — Highlighting-Code wird erst geladen wenn der Quellcode-Tab erstmals geöffnet wird (~96 kB gz on demand)
+- Highlighter als Modul-Singleton: wird einmal initialisiert und für alle nachfolgenden Renders wiederverwendet
+- Bundle: 1 Chunk à 854 kB / 215 kB gz → Haupt-Bundle 274 kB / 87 kB gz + Shiki-Chunks on demand
+
+---
+
 ## [0.4.1] — 2026-04-02
 
 ### Behoben
