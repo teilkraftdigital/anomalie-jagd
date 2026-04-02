@@ -22,7 +22,7 @@ export function DebugBar({
     ? [...getScene(sceneId).patches].sort((a, b) => {
         const severityDiff = severityOrder[a.severity] - severityOrder[b.severity];
         if (severityDiff !== 0) return severityDiff;
-        return a.label.localeCompare(b.label);
+        return a.id.localeCompare(b.id);
       })
     : [];
   const activePatch = patches.find((p) => p.id === patchId) ?? null;
@@ -63,7 +63,7 @@ export function DebugBar({
             >
               {scenes.map((s) => (
                 <option key={s.id} value={s.id}>
-                  {s.name}
+                  {s.id}
                 </option>
               ))}
             </select>
@@ -82,7 +82,7 @@ export function DebugBar({
               <option value="">— Kein Patch (clean) —</option>
               {patches.map((p) => (
                 <option key={p.id} value={p.id}>
-                  [{p.severity}] {p.label}
+                  [{p.severity}] {p.id}
                 </option>
               ))}
             </select>
@@ -90,9 +90,8 @@ export function DebugBar({
         </div>
 
         {activePatch && (
-          <div className="text-xs bg-amber-200 rounded px-3 py-2 flex gap-1 flex-col">
-            <span className="font-mono font-bold">Erklärung</span>
-            <span className="opacity-70">{activePatch.explanation}</span>
+          <div className="text-xs bg-amber-200 rounded px-3 py-2 font-mono">
+            scene: {activePatch.scene} · id: {activePatch.id}
           </div>
         )}
       </div>

@@ -4,9 +4,8 @@ export type Difficulty = "easy" | "medium" | "hard";
 
 export type Patch<TModel> = {
   id: string;
-  label: string;
+  scene: string;
   severity: Difficulty;
-  explanation: string;
   apply: (model: TModel) => TModel;
 };
 
@@ -17,8 +16,6 @@ export type AttrMutation = {
 
 export type Scene<TModel> = {
   id: string;
-  name: string;
-  description: string;
 
   // erstellt das Ausgangsmodell (ohne Anomalien)
   createBaseModel: () => TModel;

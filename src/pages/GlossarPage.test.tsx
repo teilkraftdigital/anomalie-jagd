@@ -33,7 +33,9 @@ describe("GlossarPage — Sortierung", () => {
     renderWithRouter(<GlossarPage />);
 
     const patches = screen.getAllByRole("listitem");
-    expect(patches[0]).toHaveTextContent("Hard Patch");
+    // Hard patch is newly discovered → shown first, identified by "Neu entdeckt" badge
+    expect(patches[0]).toHaveTextContent("Neu entdeckt");
+    expect(patches[0]).toHaveTextContent("Schwer");
   });
 
   it("sortiert nach Schweregrad wenn keine neu entdeckten vorhanden", () => {
@@ -47,30 +49,30 @@ describe("GlossarPage — Sortierung", () => {
     renderWithRouter(<GlossarPage />);
 
     const patches = screen.getAllByRole("listitem");
-    expect(patches[0]).toHaveTextContent("Easy Patch");
-    expect(patches[1]).toHaveTextContent("Medium Patch");
-    expect(patches[2]).toHaveTextContent("Hard Patch");
+    expect(patches[0]).toHaveTextContent("Leicht");
+    expect(patches[1]).toHaveTextContent("Mittel");
+    expect(patches[2]).toHaveTextContent("Schwer");
   });
 });
 
 describe("GlossarPage — Tab-Navigation", () => {
   it("rendert Tab für die registrierte Scene", () => {
     renderWithRouter(<GlossarPage />);
-    expect(screen.getByRole("tab", { name: /Test Scene/ })).toBeInTheDocument();
+    expect(screen.getByRole("tab")).toBeInTheDocument();
   });
 
   it("wechselt aktiven Tab per Klick", async () => {
     const user = userEvent.setup();
 
     // Zweite Scene für Tab-Wechsel registrieren
-    const secondScene = { ...testScene, id: "test-scene-2", name: "Second Scene" };
+    const secondScene = { ...testScene, id: "test-scene-2" };
     registerScene(secondScene);
 
     renderWithRouter(<GlossarPage />);
 
-    const secondTab = screen.getByRole("tab", { name: /Second Scene/ });
-    await user.click(secondTab);
-    expect(secondTab).toHaveAttribute("aria-selected", "true");
+    const tabs = screen.getAllByRole("tab");
+    await user.click(tabs[1]);
+    expect(tabs[1]).toHaveAttribute("aria-selected", "true");
 
     sceneRegistry.delete("test-scene-2");
   });

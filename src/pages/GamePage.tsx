@@ -65,7 +65,7 @@ export function GamePage() {
         )}
 
         <GameLayout
-          sceneName={scene.name}
+          sceneName={t("scene.name", { ns: `scene-${sceneId}` })}
           sceneKey={isDebug ? `${debugSceneId}-${debugPatchId}` : currentRound}
         >
           <SceneRenderer

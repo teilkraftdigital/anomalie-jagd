@@ -4,10 +4,8 @@ import type { ButtonModel } from "../model";
 
 export const patchLowContrast: Patch<ButtonModel> = {
   id: "patch-low-contrast",
-  label: "Zu geringer Farbkontrast",
+  scene: "button",
   severity: "easy",
-  explanation:
-    "Das Kontrastverhältnis zwischen Textfarbe und Hintergrund liegt unter dem WCAG-Mindestwert von 4,5:1. Für Nutzer mit Sehschwäche ist der Button-Text kaum lesbar.",
   apply(model) {
     return {
       ...model,

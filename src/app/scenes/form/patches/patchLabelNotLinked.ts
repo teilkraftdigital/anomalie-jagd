@@ -3,10 +3,8 @@ import type { FormModel } from "../model";
 
 export const patchLabelNotLinked: Patch<FormModel> = {
   id: "form-patch-label-not-linked",
-  label: "Label nicht mit Input verknüpft",
+  scene: "form",
   severity: "easy",
-  explanation:
-    "Ohne for-Attribut am <label> und passendem id am <input> ist die Verknüpfung nicht vorhanden. Klick auf den Label fokussiert das Feld nicht, Screenreader lesen den Label möglicherweise nicht vor.",
   apply(model) {
     return {
       ...model,

@@ -27,9 +27,9 @@ export function PatchCard({ patch, discovered, isNew }: Props) {
               {t("pages.glossar.newBadge")}
             </span>
           )}
-          <h2 className="font-semibold text-slate-900">{patch.label}</h2>
+          <h2 className="font-semibold text-slate-900">{t(`patches.${patch.id}.label`, { ns: `scene-${patch.scene}` })}</h2>
           {discovered ? (
-            <p className="text-slate-600 text-sm mt-1">{patch.explanation}</p>
+            <p className="text-slate-600 text-sm mt-1">{t(`patches.${patch.id}.explanation`, { ns: `scene-${patch.scene}` })}</p>
           ) : (
             <p className="text-slate-400 text-sm mt-1 italic">
               {t("pages.glossar.notDiscovered")}

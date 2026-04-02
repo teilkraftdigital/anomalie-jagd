@@ -3,10 +3,8 @@ import type { FormModel } from "../model";
 
 export const patchErrorBorderOnly: Patch<FormModel> = {
   id: "form-patch-error-border-only",
-  label: "Fehler nur als roter Rand, ohne Hilfetext und Fehlerzusammenfassung",
+  scene: "form",
   severity: "hard",
-  explanation:
-    "Fehlermeldungen dürfen nicht ausschließlich durch Farbe kommuniziert werden. Ein roter Rand ohne erklärenden Text ist für Menschen mit Farbenblindheit nicht erkennbar und bietet Screenreader-Nutzern keine Information darüber, was falsch ist.",
   apply(model) {
     return {
       ...model,

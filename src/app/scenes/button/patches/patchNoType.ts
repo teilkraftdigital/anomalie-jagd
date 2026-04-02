@@ -4,10 +4,8 @@ import { patchAttrs } from "../../../engine/patchEngine";
 
 export const patchNoType: Patch<ButtonModel> = {
   id: "patch-no-type",
-  label: 'Fehlendes type="button"',
+  scene: "button",
   severity: "hard",
-  explanation:
-    'Ohne type="button" hat ein <button> in einem Formular automatisch type="submit". Das kann ungewollte Formular-Übermittlungen auslösen und ist für Entwickler und Nutzer schwer nachvollziehbar.',
   apply(model) {
     return {
       ...model,

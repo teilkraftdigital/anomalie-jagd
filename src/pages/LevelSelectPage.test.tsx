@@ -24,7 +24,8 @@ describe("LevelSelectPage — Smoke", () => {
 
   it("zeigt registrierte Scene an", () => {
     renderWithRouter(<LevelSelectPage />);
-    expect(screen.getByText(testScene.name)).toBeInTheDocument();
+    // SceneCard wird gerendert — common-Namespace liefert discovered-String
+    expect(screen.getByText(/0\/3/)).toBeInTheDocument();
   });
 
   it("zeigt Start-Button erst nach Scene- und Difficulty-Auswahl", async () => {

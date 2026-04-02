@@ -49,7 +49,7 @@ export function GlossarPage() {
         const severityDiff =
           severityOrder[a.severity] - severityOrder[b.severity];
         if (severityDiff !== 0) return severityDiff;
-        return a.label.localeCompare(b.label);
+        return a.id.localeCompare(b.id);
       })
     : [];
 

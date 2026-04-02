@@ -47,11 +47,11 @@ describe("Toolbar — Rundenanzeige", () => {
   it("zeigt aktuelle Runde an", () => {
     useGameStore.setState({ currentRound: 4 });
     renderWithRouter(<Toolbar />);
-    expect(screen.getByText("4")).toBeInTheDocument();
+    expect(screen.getByText(/4\/6/)).toBeInTheDocument();
   });
 
   it("zeigt Schwierigkeitsgrad an", () => {
     renderWithRouter(<Toolbar />);
-    expect(screen.getByText("hard")).toBeInTheDocument();
+    expect(screen.getByText("Hard")).toBeInTheDocument();
   });
 });

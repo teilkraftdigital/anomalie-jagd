@@ -4,10 +4,8 @@ import type { ButtonModel } from "../model";
 
 export const patchDivButton: Patch<ButtonModel> = {
   id: "patch-div-button",
-  label: "<div> statt <button>",
+  scene: "button",
   severity: "easy",
-  explanation:
-    "Ein <div> ist kein interaktives Element. Es ist nicht per Tastatur fokussierbar, sendet kein click-Event bei Enter/Space und wird von Screenreadern nicht als solches angekündigt.",
   apply(model) {
     return {
       ...model,
