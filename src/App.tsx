@@ -14,21 +14,6 @@ if (!sceneRegistry.has(buttonScene.id))
   registerScene(buttonScene as Scene<any>);
 if (!sceneRegistry.has(formScene.id)) registerScene(formScene as Scene<any>);
 
-// const StartPage = lazy(() =>
-//   import("./pages/StartPage").then((m) => ({ default: m.StartPage })),
-// );
-// const GamePage = lazy(() =>
-//   import("./pages/GamePage").then((m) => ({ default: m.GamePage })),
-// );
-// const LevelSelectPage = lazy(() =>
-//   import("./pages/LevelSelectPage").then((m) => ({
-//     default: m.LevelSelectPage,
-//   })),
-// );
-// const GlossarPage = lazy(() =>
-//   import("./pages/GlossarPage").then((m) => ({ default: m.GlossarPage })),
-// );
-
 export default function App() {
   return (
     <BrowserRouter>
