@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchWrongInputType: Patch<FormModel> = {
+export const patchWrongInputType = {
   id: "form-patch-wrong-input-type",
   scene: "form",
   severity: "medium",
@@ -18,4 +18,4 @@ export const patchWrongInputType: Patch<FormModel> = {
       }),
     };
   },
-};
+} satisfies Patch<FormModel>;

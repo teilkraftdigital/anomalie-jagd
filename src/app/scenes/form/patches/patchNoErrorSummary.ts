@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchNoErrorSummary: Patch<FormModel> = {
+export const patchNoErrorSummary = {
   id: "form-patch-no-error-summary",
   scene: "form",
   severity: "medium",
@@ -11,4 +11,4 @@ export const patchNoErrorSummary: Patch<FormModel> = {
       blocks: model.blocks.filter((block) => block.type !== "error-summary"),
     };
   },
-};
+} satisfies Patch<FormModel>;

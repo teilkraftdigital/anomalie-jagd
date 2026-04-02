@@ -14,8 +14,7 @@ const de: FormSceneLocale = {
     },
     requiredNote: "Alle Felder sind Pflichtfelder",
     submitFallback: "Absenden",
-  },
-  fields: {
+    fields: {
     name: {
       label: "Name",
       placeholder: "Max Mustermann",
@@ -58,6 +57,7 @@ const de: FormSceneLocale = {
       },
     },
     submit: { label: "Registrieren" },
+    },
   },
   patches: {
     "form-patch-no-label": {

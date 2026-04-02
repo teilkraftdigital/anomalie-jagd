@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchNoAutocomplete: Patch<FormModel> = {
+export const patchNoAutocomplete = {
   id: "form-patch-no-autocomplete",
   scene: "form",
   severity: "hard",
@@ -18,4 +18,4 @@ export const patchNoAutocomplete: Patch<FormModel> = {
       }),
     };
   },
-};
+} satisfies Patch<FormModel>;

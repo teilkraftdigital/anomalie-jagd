@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchRequiredLabelOnly: Patch<FormModel> = {
+export const patchRequiredLabelOnly = {
   id: "form-patch-required-label-only",
   scene: "form",
   severity: "medium",
@@ -21,4 +21,4 @@ export const patchRequiredLabelOnly: Patch<FormModel> = {
       }),
     };
   },
-};
+} satisfies Patch<FormModel>;

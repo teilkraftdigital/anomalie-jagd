@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchLabelNotLinked: Patch<FormModel> = {
+export const patchLabelNotLinked = {
   id: "form-patch-label-not-linked",
   scene: "form",
   severity: "easy",
@@ -20,4 +20,4 @@ export const patchLabelNotLinked: Patch<FormModel> = {
       }),
     };
   },
-};
+} satisfies Patch<FormModel>;

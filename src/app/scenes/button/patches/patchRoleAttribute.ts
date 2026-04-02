@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
 import type { ButtonModel } from "../model";
 
-export const patchRoleAttribute: Patch<ButtonModel> = {
+export const patchRoleAttribute = {
   id: "patch-role-attribute",
   scene: "button",
   severity: "medium",
@@ -20,4 +20,4 @@ export const patchRoleAttribute: Patch<ButtonModel> = {
       }),
     };
   },
-} as const;
+} satisfies Patch<ButtonModel>;

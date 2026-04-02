@@ -13,8 +13,7 @@ const en: FormSceneLocale = {
     },
     requiredNote: "All fields are required",
     submitFallback: "Submit",
-  },
-  fields: {
+    fields: {
     name: {
       label: "Name",
       placeholder: "Jane Doe",
@@ -57,6 +56,7 @@ const en: FormSceneLocale = {
       },
     },
     submit: { label: "Register" },
+    },
   },
   patches: {
     "form-patch-no-label": {

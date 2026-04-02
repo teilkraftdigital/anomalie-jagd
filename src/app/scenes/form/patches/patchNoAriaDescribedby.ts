@@ -2,7 +2,7 @@ import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 import { patchAttrs } from "../../../engine/patchEngine";
 
-export const patchNoAriaDescribedby: Patch<FormModel> = {
+export const patchNoAriaDescribedby = {
   id: "form-patch-no-aria-describedby",
   scene: "form",
   severity: "hard",
@@ -24,4 +24,4 @@ export const patchNoAriaDescribedby: Patch<FormModel> = {
       }),
     };
   },
-};
+} satisfies Patch<FormModel>;

@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
 import type { ButtonModel } from "../model";
 
-export const patchNoLabel: Patch<ButtonModel> = {
+export const patchNoLabel = {
   id: "patch-no-label",
   scene: "button",
   severity: "easy",
@@ -20,4 +20,4 @@ export const patchNoLabel: Patch<ButtonModel> = {
       }),
     };
   },
-};
+} satisfies Patch<ButtonModel>;

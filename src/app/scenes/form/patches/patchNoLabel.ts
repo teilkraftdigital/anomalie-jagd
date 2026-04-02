@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchNoLabel: Patch<FormModel> = {
+export const patchNoLabel = {
   id: "form-patch-no-label",
   scene: "form",
   severity: "easy",
@@ -21,4 +21,4 @@ export const patchNoLabel: Patch<FormModel> = {
       }),
     };
   },
-};
+} satisfies Patch<FormModel>;

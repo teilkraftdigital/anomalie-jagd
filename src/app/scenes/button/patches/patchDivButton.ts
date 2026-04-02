@@ -2,7 +2,7 @@ import type { Patch } from "../../../engine/Scene";
 import { patchAttrs } from "../../../engine/patchEngine";
 import type { ButtonModel } from "../model";
 
-export const patchDivButton: Patch<ButtonModel> = {
+export const patchDivButton = {
   id: "patch-div-button",
   scene: "button",
   severity: "easy",
@@ -24,4 +24,4 @@ export const patchDivButton: Patch<ButtonModel> = {
       }),
     };
   },
-} as const;
+} satisfies Patch<ButtonModel>;

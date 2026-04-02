@@ -2,7 +2,7 @@ import { twMerge } from "tailwind-merge";
 import type { Patch } from "../../../engine/Scene";
 import type { ButtonModel } from "../model";
 
-export const patchLowContrast: Patch<ButtonModel> = {
+export const patchLowContrast = {
   id: "patch-low-contrast",
   scene: "button",
   severity: "easy",
@@ -27,4 +27,4 @@ export const patchLowContrast: Patch<ButtonModel> = {
       }),
     };
   },
-};
+} satisfies Patch<ButtonModel>;

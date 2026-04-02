@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchErrorBorderOnly: Patch<FormModel> = {
+export const patchErrorBorderOnly = {
   id: "form-patch-error-border-only",
   scene: "form",
   severity: "hard",
@@ -19,4 +19,4 @@ export const patchErrorBorderOnly: Patch<FormModel> = {
         }),
     };
   },
-};
+} satisfies Patch<FormModel>;

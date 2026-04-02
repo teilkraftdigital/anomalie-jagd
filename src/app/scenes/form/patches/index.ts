@@ -1,4 +1,3 @@
-import type { Patch } from "../../../engine/Scene";
 import { patchNoLabel } from "./patchNoLabel";
 import { patchWrongInputType } from "./patchWrongInputType";
 import { patchLabelNotLinked } from "./patchLabelNotLinked";
@@ -12,7 +11,7 @@ import { patchNoErrorSummary } from "./patchNoErrorSummary";
 import { patchErrorBorderOnly } from "./patchErrorBorderOnly";
 import { patchNoRequiredNote } from "./patchNoRequiredNote";
 
-export const patches: Patch<any>[] = [
+export const patches = [
   patchNoLabel,
   patchWrongInputType,
   patchLabelNotLinked,

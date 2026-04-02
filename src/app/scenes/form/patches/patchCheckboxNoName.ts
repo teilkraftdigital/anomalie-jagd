@@ -2,7 +2,7 @@ import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 import { patchAttrs } from "../../../engine/patchEngine";
 
-export const patchCheckboxNoName: Patch<FormModel> = {
+export const patchCheckboxNoName = {
   id: "form-patch-checkbox-no-name",
   scene: "form",
   severity: "hard",
@@ -22,4 +22,4 @@ export const patchCheckboxNoName: Patch<FormModel> = {
       }),
     };
   },
-};
+} satisfies Patch<FormModel>;

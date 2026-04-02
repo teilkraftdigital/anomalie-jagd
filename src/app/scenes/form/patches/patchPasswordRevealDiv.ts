@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchPasswordRevealDiv: Patch<FormModel> = {
+export const patchPasswordRevealDiv = {
   id: "form-patch-password-reveal-div",
   scene: "form",
   severity: "medium",
@@ -25,4 +25,4 @@ export const patchPasswordRevealDiv: Patch<FormModel> = {
       }),
     };
   },
-};
+} satisfies Patch<FormModel>;

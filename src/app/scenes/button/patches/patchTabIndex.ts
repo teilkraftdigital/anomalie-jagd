@@ -1,7 +1,7 @@
 import type { Patch } from "../../../engine/Scene";
 import type { ButtonModel } from "../model";
 
-export const patchTabIndex: Patch<ButtonModel> = {
+export const patchTabIndex = {
   id: "patch-tab-index",
   scene: "button",
   severity: "medium",
@@ -23,4 +23,4 @@ export const patchTabIndex: Patch<ButtonModel> = {
       }),
     };
   },
-};
+} satisfies Patch<ButtonModel>;
