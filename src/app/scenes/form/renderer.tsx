@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import type { FormModel, InputContent } from "./model";
 import { validateForm, type FieldError, type FormValues } from "./validation";
 
-const labelClass = "block text-sm font-medium text-slate-700 mb-1";
+const labelClass = "block text-sm font-medium text-slate-700 mb-1 ";
 
 function getInputClass(
   hasError: boolean,
@@ -34,6 +34,7 @@ function InputField({
     labelAttrs,
     placeholder,
     required,
+    requiredLabel,
     autocomplete,
     attrs,
     revealButton,
@@ -43,6 +44,7 @@ function InputField({
 
   const hasError = !!error;
   const showMessage = hasError && errorDisplay !== "border-only";
+  const { "aria-describedby": modelDescribedBy, ...restAttrs } = attrs ?? {};
 
   if (inputType === "checkbox") {
     return (
@@ -60,15 +62,18 @@ function InputField({
             {...attrs}
           />
           {checkboxLabel && (
-            <span className="text-sm text-slate-700">{checkboxLabel}</span>
+            <span className="text-sm text-slate-700">
+              {checkboxLabel}
+              {requiredLabel && (
+                <span className="text-gray-400 ml-1" aria-hidden="true">
+                  {requiredLabel}
+                </span>
+              )}
+            </span>
           )}
         </div>
         {showMessage && (
-          <p
-            id={`${attrs?.id}-error`}
-            className="text-xs text-red-600"
-            role="alert"
-          >
+          <p id={`${attrs?.id}-error`} className="text-xs text-red-600">
             {error!.message}
           </p>
         )}
@@ -85,7 +90,12 @@ function InputField({
     <div className="flex flex-col">
       {label && (
         <label className={labelClass} {...labelAttrs}>
-          {label}
+          <span>{label}</span>
+          {requiredLabel && (
+            <span className="text-gray-400 ml-1" aria-hidden="true">
+              {requiredLabel}
+            </span>
+          )}
         </label>
       )}
       <div className="relative">
@@ -101,13 +111,12 @@ function InputField({
           aria-describedby={
             [
               hasError && showMessage ? `${fieldId}-error` : "",
-              content.hint ? `${fieldId}-hint` : "",
-              attrs?.["aria-describedby"] ?? "",
+              modelDescribedBy ?? "",
             ]
               .filter(Boolean)
               .join(" ") || undefined
           }
-          {...attrs}
+          {...restAttrs}
         />
         {revealButton && (
           <RevealAs
@@ -128,7 +137,7 @@ function InputField({
         <p
           id={`${fieldId}-error`}
           className="text-xs text-red-600 mt-1"
-          role="alert"
+          role="status"
         >
           {error!.message}
         </p>
@@ -171,7 +180,7 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
                 key={i}
                 ref={summaryRef}
                 tabIndex={-1}
-                role="alert"
+                role="status"
                 aria-label="Fehlerübersicht"
                 className="border border-red-400 bg-red-50 rounded-lg p-4 text-sm text-red-800 focus:outline-none"
               >
@@ -191,6 +200,14 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
                   ))}
                 </ul>
               </div>
+            );
+          }
+
+          if (block.type === "required-note") {
+            return (
+              <p key={i} className="text-xs text-slate-600">
+                <span aria-hidden="true">*</span> Alle Felder sind Pflichtfelder
+              </p>
             );
           }
 

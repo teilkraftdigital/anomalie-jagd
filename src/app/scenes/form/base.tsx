@@ -7,6 +7,9 @@ export const formScene: FormModel = {
       type: "error-summary",
     },
     {
+      type: "required-note",
+    },
+    {
       type: "input",
       content: {
         inputType: "text",
@@ -14,6 +17,7 @@ export const formScene: FormModel = {
         labelAttrs: { htmlFor: "name" },
         placeholder: "Max Mustermann",
         required: true,
+        requiredLabel: undefined,
         autocomplete: "name",
         attrs: { id: "name" },
         validation: {
@@ -33,6 +37,7 @@ export const formScene: FormModel = {
         labelAttrs: { htmlFor: "email" },
         placeholder: "max@example.com",
         required: true,
+        requiredLabel: undefined,
         autocomplete: "email",
         attrs: { id: "email" },
         validation: {
@@ -51,6 +56,7 @@ export const formScene: FormModel = {
         label: "Passwort",
         labelAttrs: { htmlFor: "password" },
         required: true,
+        requiredLabel: undefined,
         placeholder: "••••••••",
         autocomplete: "new-password",
         attrs: { id: "password" },
@@ -74,9 +80,10 @@ export const formScene: FormModel = {
         label: "Passwort wiederholen",
         labelAttrs: { htmlFor: "password-repeat" },
         required: true,
+        requiredLabel: undefined,
         placeholder: "••••••••",
         autocomplete: "new-password",
-        attrs: { id: "password-repeat", "aria-describedby": "password-hint" },
+        attrs: { id: "password-repeat", "aria-describedby": "password-repeat-hint" },
         hint: "Passwort muss mit dem oberen übereinstimmen.",
         revealButton: {
           as: "button",
@@ -96,6 +103,7 @@ export const formScene: FormModel = {
       content: {
         inputType: "checkbox",
         required: true,
+        requiredLabel: undefined,
         checkboxLabel: "Ich stimme den AGB zu",
         attrs: { id: "agb", "aria-label": "Ich stimme den AGB zu" },
         validation: {

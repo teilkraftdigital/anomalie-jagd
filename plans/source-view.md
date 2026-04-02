@@ -1,4 +1,4 @@
-# Plan: Quellcode-Ansicht (v0.3.0)
+# Plan: Quellcode-Ansicht (v0.4.0)
 
 > Quelle: Grill-Me-Session 2026-04-02
 

@@ -3,7 +3,7 @@ import type { FormModel } from "../model";
 
 export const patchNoLabel: Patch<FormModel> = {
   id: "form-patch-no-label",
-  label: "Kein Label am Name-Feld",
+  label: "Keine Label an Input-Feldern",
   severity: "easy",
   explanation:
     "Alle Inputs ohne zugehöriges <label> haben keinen zugänglichen Namen. Screenreader können den Zweck des Feldes nicht kommunizieren.",

@@ -16,9 +16,7 @@ export const patchRequiredLabelOnly: Patch<FormModel> = {
           ...block,
           content: {
             ...block.content,
-            label: block.content.label
-              ? `${block.content.label} *`
-              : block.content.label,
+            requiredLabel: "*",
             required: false,
           },
         };
