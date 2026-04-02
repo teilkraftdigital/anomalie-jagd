@@ -4,11 +4,11 @@ import { useShikiHighlight } from "../../hooks/useShikiHighlight";
 
 type Tab = "vorschau" | "quellcode";
 
-function serializeScene(innerHTML: string): string {
+function serializeScene(innerHTML: string, sceneName: string): string {
   const stub = `<!DOCTYPE html>
 <html lang="de">
   <head>
-    <title>Anomalie-Jagd</title>
+    <title>${sceneName}</title>
   </head>
   <body>
     <main>
@@ -27,22 +27,30 @@ function stripClasses(html: string): string {
   return html.replace(/class="[^"]*"/g, 'class="…"');
 }
 
-export function GameLayout({ children }: { children: ReactNode }) {
+export function GameLayout({
+  children,
+  sceneName,
+}: {
+  children: ReactNode;
+  sceneName: string;
+}) {
   const [activeTab, setActiveTab] = useState<Tab>("vorschau");
   const [serializedHtml, setSerializedHtml] = useState<string>("");
-  const [showClasses, setShowClasses] = useState(true);
+  const [showClasses, setShowClasses] = useState(false);
   const vorschauTabRef = useRef<HTMLButtonElement>(null);
   const quellcodeTabRef = useRef<HTMLButtonElement>(null);
   const sceneContentRef = useRef<HTMLDivElement>(null);
 
-  const displayHtml = showClasses ? serializedHtml : stripClasses(serializedHtml);
+  const displayHtml = showClasses
+    ? serializedHtml
+    : stripClasses(serializedHtml);
   const highlightedHtml = useShikiHighlight(displayHtml);
 
   useEffect(() => {
     if (activeTab === "quellcode" && sceneContentRef.current) {
-      setSerializedHtml(serializeScene(sceneContentRef.current.innerHTML));
+      setSerializedHtml(serializeScene(sceneContentRef.current.innerHTML, sceneName));
     }
-  }, [activeTab]);
+  }, [activeTab, sceneName]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowRight") {
@@ -137,6 +145,9 @@ export function GameLayout({ children }: { children: ReactNode }) {
           <div className="flex items-center gap-2 px-4 pt-3 pb-1 border-b border-slate-100">
             <button
               aria-pressed={!showClasses}
+              aria-label={
+                showClasses ? "CSS-Klassen ausblenden" : "CSS-Klassen anzeigen"
+              }
               onClick={() => setShowClasses((v) => !v)}
               className={`px-2 py-0.5 text-xs rounded border font-mono transition-colors ${
                 !showClasses
