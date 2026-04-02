@@ -143,7 +143,7 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 
 ---
 
-## [0.3.0] — unveröffentlicht
+## [0.3.0] — 2026-04-01
 
 ### Hinzugefügt
 
@@ -178,3 +178,30 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 
 - `rng.ts`: seeded-RNG-Erweiterungen entfernt (`setSeed`, `random`, `randomInt`, `randomChoice`, `randomBool`) — nur `shuffle` verbleibt
 
+## [0.4.0] — 2026-04-02
+
+### Hinzugefügt
+
+**Quellcode-Ansicht**
+
+- `GameShell` erhält Vorschau/Quellcode-Tab-Toggle direkt in der Browser-Titelleiste
+- ARIA-Tabs-Pattern: `role="tablist/tab/tabpanel"`, `aria-selected`, `aria-controls`, Roving Tabindex (Pfeil-Links/Rechts)
+- Scene-Inhalt bleibt immer im DOM; inaktives Panel mit `hidden` für Screen Reader ausgeblendet
+- HTML-Serialisierung: `ref` auf Scene-Content, `innerHTML` in vollständigen HTML-Stub eingebettet (`<!DOCTYPE html>`, `<html lang="de">`, `<body><main>`)
+- Stub-Titel zeigt den Namen der aktiven Szene (z. B. „Registrierungsformular")
+- `js-beautify` formatiert den HTML-Output mit konsistenter Einrückung; alle Elemente auf eigener Zeile (`inline: []`)
+- `useShikiHighlight` Hook (`src/hooks/`) — async Syntax-Highlighting via Shiki (`github-light` Theme, Inline-Styles, kein Tailwind-Konflikt)
+- Fallback auf ungehighlighteten `<pre><code>`-Block bis Shiki geladen hat
+- CSS-Klassen-Toggle: Button `class="…"` ersetzt alle `class`-Attributwerte durch `…` — reduziert Rauschen durch Tailwind-Klassen
+- word-wrap (`whitespace-pre-wrap`) verhindert horizontalen Overflow bei langen Klassen-Strings
+- Quellcode-Ansicht synct automatisch bei Rundenwechsel, auch wenn der Tab bereits aktiv ist
+
+**Szene: Registrierungsformular**
+
+- Neuer Block-Typ `required-note`: zeigt `* Alle Felder sind Pflichtfelder` im Formular — Basismodell ist damit WCAG-konform bezüglich Pflichtfeld-Kennzeichnung
+- `patchNoRequiredNote` (easy) — entfernt den Pflichtfeld-Hinweis; Spieler muss erkennen, dass kein Hinweis vorhanden ist
+
+### Verbessert
+
+- `Toolbar`: 3-Spalten-Grid-Layout — „Aufgeben"/Rundenanzeige links, Aktions-Buttons mittig, Schwierigkeitsgrad rechts
+- Abhängigkeiten: `js-beautify`, `@types/js-beautify`, `shiki` hinzugefügt
