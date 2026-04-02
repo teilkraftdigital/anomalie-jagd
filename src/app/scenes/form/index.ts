@@ -1,12 +1,16 @@
 import type { Scene } from "../../engine/Scene";
 import type { FormModel } from "./model";
-import { formScene as formSceneBase } from "./base";
+import { createFormBaseModel } from "./base";
 import { FormSceneRenderer } from "./renderer";
 import { patches } from "./patches";
+import de from "./locale/de";
+import en from "./locale/en";
 
 export const formScene: Scene<FormModel> = {
   id: "form",
   patches,
-  createBaseModel: () => formSceneBase,
+  createBaseModel: createFormBaseModel,
   render: FormSceneRenderer,
 };
+
+export const locales = { de, en };
