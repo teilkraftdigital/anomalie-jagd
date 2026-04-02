@@ -83,7 +83,7 @@ export const formScene: FormModel = {
         requiredLabel: undefined,
         placeholder: "••••••••",
         autocomplete: "new-password",
-        attrs: { id: "password-repeat", "aria-describedby": "password-hint" },
+        attrs: { id: "password-repeat", "aria-describedby": "password-repeat-hint" },
         hint: "Passwort muss mit dem oberen übereinstimmen.",
         revealButton: {
           as: "button",

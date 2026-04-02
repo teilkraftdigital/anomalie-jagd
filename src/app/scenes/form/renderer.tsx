@@ -44,6 +44,7 @@ function InputField({
 
   const hasError = !!error;
   const showMessage = hasError && errorDisplay !== "border-only";
+  const { "aria-describedby": modelDescribedBy, ...restAttrs } = attrs ?? {};
 
   if (inputType === "checkbox") {
     return (
@@ -114,13 +115,12 @@ function InputField({
           aria-describedby={
             [
               hasError && showMessage ? `${fieldId}-error` : "",
-              content.hint ? `${fieldId}-hint` : "",
-              attrs?.["aria-describedby"] ?? "",
+              modelDescribedBy ?? "",
             ]
               .filter(Boolean)
               .join(" ") || undefined
           }
-          {...attrs}
+          {...restAttrs}
         />
         {revealButton && (
           <RevealAs
@@ -209,8 +209,8 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
 
           if (block.type === "required-note") {
             return (
-              <p key={i} className="text-xs text-slate-500">
-                * Alle Felder sind Pflichtfelder
+              <p key={i} className="text-xs text-slate-600">
+                <span aria-hidden="true">*</span> Alle Felder sind Pflichtfelder
               </p>
             );
           }
