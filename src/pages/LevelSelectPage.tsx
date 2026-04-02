@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { listScenes } from "../app/engine/sceneRegistry";
 import useGameStore from "../store/useGameStore";
 import DifficultyCard from "../components/molecules/DifficultyCard";
@@ -7,6 +8,7 @@ import SceneCard from "../components/molecules/SceneCard";
 import { type Difficulty, DIFFICULTIES } from "../app/engine/Scene";
 
 export function LevelSelectPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const discoveredPatchIds = useGameStore((s) => s.discoveredPatchIds);
   const startGame = useGameStore((s) => s.startGame);
@@ -35,19 +37,17 @@ export function LevelSelectPage() {
           to="/"
           className="absolute top-4 left-6 text-slate-400 hover:text-white text-sm transition-colors"
         >
-          <span aria-hidden="true">←</span> Start
+          <span aria-hidden="true">←</span> {t("pages.levelSelect.back")}
         </Link>
       </nav>
       <main className="w-full flex flex-col items-center">
-        <h1 className="text-3xl font-bold mb-2">Level auswählen</h1>
-        <p className="text-slate-400 mb-10">
-          Wähle eine Scene und einen Schwierigkeitsgrad.
-        </p>
+        <h1 className="text-3xl font-bold mb-2">{t("pages.levelSelect.title")}</h1>
+        <p className="text-slate-400 mb-10">{t("pages.levelSelect.subtitle")}</p>
 
         {/* Scene selection */}
         <div className="w-full max-w-2xl mb-8">
           <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
-            Scene
+            {t("pages.levelSelect.sceneHeading")}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {scenes.map((scene) => {
@@ -57,6 +57,7 @@ export function LevelSelectPage() {
 
               return (
                 <SceneCard
+                  key={scene.id}
                   scene={scene}
                   isSelected={isSelected}
                   discovered={discovered}
@@ -72,16 +73,14 @@ export function LevelSelectPage() {
         {selectedSceneId && (
           <div className="w-full max-w-2xl mb-10">
             <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
-              Schwierigkeitsgrad
+              {t("pages.levelSelect.difficultyHeading")}
             </h2>
             <div className="grid grid-cols-3 gap-3">
-              {DIFFICULTIES.map(({ value, label, description }) => {
+              {DIFFICULTIES.map(({ value }) => {
                 const isSelected = selectedDifficulty === value;
                 return (
                   <DifficultyCard
                     key={value}
-                    label={label}
-                    description={description}
                     value={value}
                     isSelected={isSelected}
                     onChange={(val) => setSelectedDifficulty(val)}
@@ -98,7 +97,7 @@ export function LevelSelectPage() {
             onClick={handleStart}
             className="bg-white text-slate-900 font-bold text-lg px-10 py-3 rounded-xl hover:bg-slate-200 transition-colors"
           >
-            Spielen
+            {t("pages.levelSelect.play")}
           </button>
         )}
       </main>

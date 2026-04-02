@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import useGameStore from "../store/useGameStore";
 import { listScenes } from "../app/engine/sceneRegistry";
 import { GlossarTabs } from "../components/molecules/GlossarTabs";
 import { PatchCard } from "../components/molecules/PatchCard";
 
 export function GlossarPage() {
+  const { t } = useTranslation();
   const discoveredPatchIds = useGameStore((s) => s.discoveredPatchIds);
   const newlyDiscoveredPatchIds = useGameStore(
     (s) => s.newlyDiscoveredPatchIds,
@@ -25,8 +27,8 @@ export function GlossarPage() {
   useEffect(() => {
     if (newlyDiscoveredPatchIds.length > 0) {
       setShowToast(true);
-      const t = setTimeout(() => setShowToast(false), 3000);
-      return () => clearTimeout(t);
+      const timer = setTimeout(() => setShowToast(false), 3000);
+      return () => clearTimeout(timer);
     }
     // newlyDiscoveredPatchIds is intentionally read only on mount — toast shows
     // the count captured at navigation time, not reactive updates.
@@ -59,9 +61,9 @@ export function GlossarPage() {
           role="status"
           className="fixed top-4 left-1/2 -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold"
         >
-          Geschafft!
+          {t("pages.glossar.toastSuccess")}
           {newlyDiscoveredPatchIds.length > 0 &&
-            ` ${newlyDiscoveredPatchIds.length} neue Anomalie(n) entdeckt.`}
+            ` ${t("pages.glossar.toastDiscovered", { count: newlyDiscoveredPatchIds.length })}`}
         </div>
       )}
 
@@ -71,9 +73,9 @@ export function GlossarPage() {
           to="/"
           className="text-slate-400 hover:text-white text-sm transition-colors"
         >
-          <span aria-hidden="true">←</span> Start
+          <span aria-hidden="true">←</span> {t("pages.glossar.back")}
         </Link>
-        <h1 className="font-bold text-lg">Anomalien-Glossar</h1>
+        <h1 className="font-bold text-lg">{t("pages.glossar.title")}</h1>
         <button
           onClick={() => {
             navigate("/level-select");
@@ -81,7 +83,7 @@ export function GlossarPage() {
           }}
           className="bg-white text-slate-900 text-sm font-semibold px-4 py-1.5 rounded-lg hover:bg-slate-200 transition-colors"
         >
-          Nochmal spielen
+          {t("pages.glossar.playAgain")}
         </button>
       </header>
 

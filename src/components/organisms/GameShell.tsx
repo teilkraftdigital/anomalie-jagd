@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { html as beautifyHtml } from "js-beautify";
 import { useShikiHighlight } from "../../hooks/useShikiHighlight";
 
@@ -37,6 +38,7 @@ export function GameLayout({
   sceneName: string;
   sceneKey: string | number;
 }) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<Tab>("vorschau");
   const [serializedHtml, setSerializedHtml] = useState<string>("");
   const [showClasses, setShowClasses] = useState(false);
@@ -73,7 +75,7 @@ export function GameLayout({
   return (
     <section
       className="flex-1 flex items-start justify-center p-8"
-      aria-label="Spielbereich"
+      aria-label={t("gameshell.gameArea")}
     >
       <div className="w-full max-w-2xl rounded-xl overflow-hidden shadow-2xl border border-slate-300">
         <div className="bg-slate-200 px-4 py-2 flex items-center gap-3">
@@ -84,7 +86,7 @@ export function GameLayout({
           </div>
           <div
             role="tablist"
-            aria-label="Ansicht wählen"
+            aria-label={t("gameshell.chooseView")}
             className="flex gap-1"
             onKeyDown={handleKeyDown}
           >
@@ -102,7 +104,7 @@ export function GameLayout({
                   : "text-slate-500 hover:text-slate-700"
               }`}
             >
-              Vorschau
+              {t("gameshell.preview")}
             </button>
             <button
               ref={quellcodeTabRef}
@@ -118,7 +120,7 @@ export function GameLayout({
                   : "text-slate-500 hover:text-slate-700"
               }`}
             >
-              Quellcode
+              {t("gameshell.source")}
             </button>
           </div>
           <div
@@ -151,7 +153,9 @@ export function GameLayout({
             <button
               aria-pressed={!showClasses}
               aria-label={
-                showClasses ? "CSS-Klassen ausblenden" : "CSS-Klassen anzeigen"
+                showClasses
+                  ? t("gameshell.hideClasses")
+                  : t("gameshell.showClasses")
               }
               onClick={() => setShowClasses((v) => !v)}
               className={`px-2 py-0.5 text-xs rounded border font-mono transition-colors ${
@@ -160,7 +164,7 @@ export function GameLayout({
                   : "bg-white text-slate-500 border-slate-300 hover:border-slate-400"
               }`}
             >
-              class="…"
+              {t("gameshell.toggleClasses")}
             </button>
           </div>
           {highlightedHtml ? (

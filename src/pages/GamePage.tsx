@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { GameLayout } from "../components/organisms/GameShell";
 import { Toolbar } from "../components/organisms/Toolbar";
 import { DebugBar } from "../components/organisms/DebugBar";
@@ -6,6 +7,7 @@ import { useGameSession } from "../hooks/useGameSession";
 import { useDebugMode } from "../hooks/useDebugMode";
 
 export function GamePage() {
+  const { t } = useTranslation();
   const {
     ready,
     currentSceneId,
@@ -58,8 +60,7 @@ export function GamePage() {
             role="status"
             className="bg-blue-50 border-b border-blue-200 text-blue-800 text-sm text-center py-2 px-4"
           >
-            Runde 1: Schau dir die Scene genau an — hier gibt es noch keine
-            Anomalie.
+            {t("round.hint")}
           </div>
         )}
 
@@ -85,7 +86,7 @@ export function GamePage() {
               lastGuessResult === "correct" ? "bg-green-600" : "bg-red-600"
             }`}
           >
-            {lastGuessResult === "correct" ? "Richtig!" : "Leider falsch!"}
+            {lastGuessResult === "correct" ? t("feedback.correct") : t("feedback.wrong")}
           </div>
         </div>
       )}

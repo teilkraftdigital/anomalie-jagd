@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { Difficulty } from "../../app/engine/Scene";
 
 type Props = {
@@ -11,11 +12,12 @@ const variantClass: Record<Difficulty, string> = {
 };
 
 export function SeverityBadge({ severity }: Props) {
+  const { t } = useTranslation();
   return (
     <span
       className={`shrink-0 text-xs font-mono px-2 py-1 rounded-full ${variantClass[severity]}`}
     >
-      {severity}
+      {t(`severity.${severity}`)}
     </span>
   );
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { Scene } from "../../app/engine/Scene";
 
 export type SceneCardProps = {
@@ -15,6 +16,7 @@ export default function SceneCard({
   total,
   onClick,
 }: SceneCardProps) {
+  const { t } = useTranslation();
   return (
     <button
       key={scene.id}
@@ -28,7 +30,7 @@ export default function SceneCard({
       <div className="font-bold text-lg">{scene.name}</div>
       <div className="text-slate-200 text-sm mt-0.5">{scene.description}</div>
       <div className="text-slate-300 text-xs mt-2 font-mono">
-        {discovered}/{total} Anomalien entdeckt
+        {t("pages.levelSelect.discovered", { discovered, total })}
       </div>
     </button>
   );
