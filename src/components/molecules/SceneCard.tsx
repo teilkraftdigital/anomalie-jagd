@@ -18,11 +18,7 @@ export default function SceneCard({
   return (
     <button
       key={scene.id}
-      onClick={() => {
-        onClick(scene.id);
-        // setSelectedSceneId(scene.id);
-        // setSelectedDifficulty(null);
-      }}
+      onClick={() => onClick(scene.id)}
       className={`text-left rounded-xl border px-5 py-4 transition-all ${
         isSelected
           ? "border-white bg-slate-700"

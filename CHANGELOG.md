@@ -140,3 +140,41 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 - `CLAUDE.md` aktualisiert: neue Ordnerstruktur, Atomic Design Konventionen, Hook-Richtlinie, Engine-Module
 - `plans/refactor-solid-atomic-design.md` als abgeschlossen markiert
 - `src/app/` enthält ausschließlich `engine/` und `scenes/` — keine Layout-Reste
+
+---
+
+## [0.3.0] — unveröffentlicht
+
+### Hinzugefügt
+
+**Test-Infrastruktur**
+
+- Vitest + jsdom + @testing-library/react + @testing-library/user-event eingerichtet
+- `npm test` als Script in `package.json`
+- `src/test-utils/`: `testScene.ts` (Minimal-Stub-Fixture), `renderWithRouter.tsx`, `setup.ts`
+- 49 Tests in 4 Schichten: Engine, Store, Components (Toolbar, GlossarPage, GamePage, LevelSelectPage)
+
+**Engine-Tests** (`src/app/engine/`)
+
+- `poolLogic`: `buildPool`-Invarianten — Membership, undiscovered-first, Fallback wenn alle entdeckt
+- `roundLogic`: `isGameOver`-Grenzwerte, `pickNextPatch`-Pool-Refill via `vi.spyOn(Math, 'random')`
+- `discoveryLogic`: `trackDiscovery`-Akkumulation über Neustarts, kein Doppeleintrag
+- `sessionLogic`: `initSession`-Difficulty-Filter, undiscovered-first Pool, Unknown-Scene-Fehler
+
+**Store-Tests** (`src/store/`)
+
+- `startGame`: Pool-Aufbau, Difficulty-Filter, State-Reset
+- `guess` correct/wrong: `lastGuessResult`, `currentRound`, Discovery-Tracking, Neustart-Logik
+- Game-Over-Erkennung bei Runde `GAME_ROUNDS`
+
+**Component-Tests**
+
+- `Toolbar`: Buttons disabled während `lastGuessResult !== null` oder `currentRound === 0`
+- `GlossarPage`: Sortierung (neu entdeckt zuerst, dann Schweregrad), Tab-Wechsel per Klick
+- `GamePage`: Smoke-Test mit aktivem Spielstand
+- `LevelSelectPage`: Smoke-Test, Start-Button ohne Auswahl nicht vorhanden
+
+### Geändert
+
+- `rng.ts`: seeded-RNG-Erweiterungen entfernt (`setSeed`, `random`, `randomInt`, `randomChoice`, `randomBool`) — nur `shuffle` verbleibt
+

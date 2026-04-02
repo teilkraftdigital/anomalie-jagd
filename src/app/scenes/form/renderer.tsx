@@ -160,7 +160,7 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
   }
 
   return (
-    <div className="p-6">
+    <>
       <h2 className="text-2xl font-bold mb-6 tracking-tight">Registrieren</h2>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
         {model.blocks.map((block, i) => {
@@ -228,6 +228,6 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
           return null;
         })}
       </form>
-    </div>
+    </>
   );
 }
