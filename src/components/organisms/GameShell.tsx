@@ -31,9 +31,11 @@ function stripClasses(html: string): string {
 export function GameLayout({
   children,
   sceneName,
+  sceneKey,
 }: {
   children: ReactNode;
   sceneName: string;
+  sceneKey: string | number;
 }) {
   const [activeTab, setActiveTab] = useState<Tab>("vorschau");
   const [serializedHtml, setSerializedHtml] = useState<string>("");
@@ -49,9 +51,11 @@ export function GameLayout({
 
   useEffect(() => {
     if (activeTab === "quellcode" && sceneContentRef.current) {
-      setSerializedHtml(serializeScene(sceneContentRef.current.innerHTML, sceneName));
+      setSerializedHtml(
+        serializeScene(sceneContentRef.current.innerHTML, sceneName),
+      );
     }
-  }, [activeTab, sceneName]);
+  }, [activeTab, sceneName, sceneKey]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowRight") {
@@ -131,7 +135,7 @@ export function GameLayout({
           aria-labelledby="tab-vorschau"
           hidden={activeTab !== "vorschau"}
         >
-          <div ref={sceneContentRef} className="bg-white">
+          <div ref={sceneContentRef} className="bg-white p-6">
             {children}
           </div>
         </div>

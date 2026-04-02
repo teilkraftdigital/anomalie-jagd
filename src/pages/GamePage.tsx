@@ -63,7 +63,10 @@ export function GamePage() {
           </div>
         )}
 
-        <GameLayout sceneName={scene.name}>
+        <GameLayout
+          sceneName={scene.name}
+          sceneKey={isDebug ? `${debugSceneId}-${debugPatchId}` : currentRound}
+        >
           <SceneRenderer
             key={isDebug ? `${debugSceneId}-${debugPatchId}` : currentRound}
             model={model}
