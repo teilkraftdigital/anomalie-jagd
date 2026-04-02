@@ -73,11 +73,7 @@ function InputField({
           )}
         </div>
         {showMessage && (
-          <p
-            id={`${attrs?.id}-error`}
-            className="text-xs text-red-600"
-            role="status"
-          >
+          <p id={`${attrs?.id}-error`} className="text-xs text-red-600">
             {error!.message}
           </p>
         )}
@@ -184,7 +180,7 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
                 key={i}
                 ref={summaryRef}
                 tabIndex={-1}
-                role="alert"
+                role="status"
                 aria-label="Fehlerübersicht"
                 className="border border-red-400 bg-red-50 rounded-lg p-4 text-sm text-red-800 focus:outline-none"
               >
