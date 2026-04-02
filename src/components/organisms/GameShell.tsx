@@ -1,11 +1,39 @@
-import { useState, useRef, type ReactNode } from "react";
+import { useState, useRef, useEffect, type ReactNode } from "react";
+import { html as beautifyHtml } from "js-beautify";
 
 type Tab = "vorschau" | "quellcode";
 
+function serializeScene(innerHTML: string): string {
+  const stub = `<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <title>Anomalie-Jagd</title>
+  </head>
+  <body>
+    <main>
+      ${innerHTML}
+    </main>
+  </body>
+</html>`;
+  return beautifyHtml(stub, {
+    indent_size: 2,
+    wrap_line_length: 0,
+    end_with_newline: true,
+  });
+}
+
 export function GameLayout({ children }: { children: ReactNode }) {
   const [activeTab, setActiveTab] = useState<Tab>("vorschau");
+  const [serializedHtml, setSerializedHtml] = useState<string>("");
   const vorschauTabRef = useRef<HTMLButtonElement>(null);
   const quellcodeTabRef = useRef<HTMLButtonElement>(null);
+  const sceneContentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (activeTab === "quellcode" && sceneContentRef.current) {
+      setSerializedHtml(serializeScene(sceneContentRef.current.innerHTML));
+    }
+  }, [activeTab]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowRight") {
@@ -80,20 +108,23 @@ export function GameLayout({ children }: { children: ReactNode }) {
           role="tabpanel"
           id="panel-vorschau"
           aria-labelledby="tab-vorschau"
-          className="bg-white"
           hidden={activeTab !== "vorschau"}
         >
-          {children}
+          <div ref={sceneContentRef} className="bg-white">
+            {children}
+          </div>
         </div>
 
         <div
           role="tabpanel"
           id="panel-quellcode"
           aria-labelledby="tab-quellcode"
-          className="bg-white"
           hidden={activeTab !== "quellcode"}
+          className="bg-white"
         >
-          {/* Phase 3: Serialisierter HTML-Inhalt */}
+          <pre className="overflow-auto p-4 text-xs leading-relaxed text-slate-800 font-mono">
+            <code>{serializedHtml}</code>
+          </pre>
         </div>
       </div>
     </section>
