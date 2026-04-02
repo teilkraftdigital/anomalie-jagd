@@ -10,6 +10,7 @@ import { patchPasswordRevealDiv } from "./patchPasswordRevealDiv";
 import { patchNoAriaDescribedby } from "./patchNoAriaDescribedby";
 import { patchNoErrorSummary } from "./patchNoErrorSummary";
 import { patchErrorBorderOnly } from "./patchErrorBorderOnly";
+import { patchNoRequiredNote } from "./patchNoRequiredNote";
 
 export const patches: Patch<any>[] = [
   patchNoLabel,
@@ -23,4 +24,5 @@ export const patches: Patch<any>[] = [
   patchNoAriaDescribedby,
   patchNoErrorSummary,
   patchErrorBorderOnly,
+  patchNoRequiredNote,
 ];

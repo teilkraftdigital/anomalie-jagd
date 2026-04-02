@@ -14,6 +14,7 @@ export type InputContent = {
   labelAttrs?: { htmlFor?: string; [key: string]: any };
   placeholder?: string;
   required?: boolean;
+  requiredLabel?: string;
   autocomplete?: string;
   hint?: string;
   attrs?: HTMLAttributes<HTMLInputElement> & Record<string, any>;
@@ -29,6 +30,7 @@ export type InputContent = {
 export type FormBlock =
   | { type: "input"; content: InputContent }
   | { type: "error-summary" }
+  | { type: "required-note" }
   | {
       type: "submit";
       content: {

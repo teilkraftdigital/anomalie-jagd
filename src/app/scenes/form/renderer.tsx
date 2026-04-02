@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import type { FormModel, InputContent } from "./model";
 import { validateForm, type FieldError, type FormValues } from "./validation";
 
-const labelClass = "block text-sm font-medium text-slate-700 mb-1";
+const labelClass = "block text-sm font-medium text-slate-700 mb-1 ";
 
 function getInputClass(
   hasError: boolean,
@@ -34,6 +34,7 @@ function InputField({
     labelAttrs,
     placeholder,
     required,
+    requiredLabel,
     autocomplete,
     attrs,
     revealButton,
@@ -60,14 +61,21 @@ function InputField({
             {...attrs}
           />
           {checkboxLabel && (
-            <span className="text-sm text-slate-700">{checkboxLabel}</span>
+            <span className="text-sm text-slate-700">
+              {checkboxLabel}
+              {requiredLabel && (
+                <span className="text-gray-400 ml-1" aria-hidden="true">
+                  {requiredLabel}
+                </span>
+              )}
+            </span>
           )}
         </div>
         {showMessage && (
           <p
             id={`${attrs?.id}-error`}
             className="text-xs text-red-600"
-            role="alert"
+            role="status"
           >
             {error!.message}
           </p>
@@ -85,7 +93,12 @@ function InputField({
     <div className="flex flex-col">
       {label && (
         <label className={labelClass} {...labelAttrs}>
-          {label}
+          <span>{label}</span>
+          {requiredLabel && (
+            <span className="text-gray-400 ml-1" aria-hidden="true">
+              {requiredLabel}
+            </span>
+          )}
         </label>
       )}
       <div className="relative">
@@ -128,7 +141,7 @@ function InputField({
         <p
           id={`${fieldId}-error`}
           className="text-xs text-red-600 mt-1"
-          role="alert"
+          role="status"
         >
           {error!.message}
         </p>
@@ -191,6 +204,14 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
                   ))}
                 </ul>
               </div>
+            );
+          }
+
+          if (block.type === "required-note") {
+            return (
+              <p key={i} className="text-xs text-slate-500">
+                * Alle Felder sind Pflichtfelder
+              </p>
             );
           }
 
