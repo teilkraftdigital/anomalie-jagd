@@ -20,6 +20,7 @@ function serializeScene(innerHTML: string, sceneName: string): string {
     indent_size: 2,
     wrap_line_length: 0,
     end_with_newline: true,
+    inline: [],
   });
 }
 
