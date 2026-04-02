@@ -19,4 +19,4 @@ export const patchErrorBorderOnly = {
         }),
     };
   },
-} satisfies Patch<FormModel>;
+} as const satisfies Patch<FormModel>;

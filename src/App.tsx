@@ -27,7 +27,7 @@ export default function App() {
       <Suspense>
         <Routes>
           <Route path="/" element={<StartPage />} />
-          <Route path="/spiel" element={<GamePage />} />
+          <Route path="/game" element={<GamePage />} />
           <Route path="/level-select" element={<LevelSelectPage />} />
           <Route path="/glossar" element={<GlossarPage />} />
         </Routes>

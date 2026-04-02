@@ -20,4 +20,4 @@ export const patchLabelNotLinked = {
       }),
     };
   },
-} satisfies Patch<FormModel>;
+} as const satisfies Patch<FormModel>;

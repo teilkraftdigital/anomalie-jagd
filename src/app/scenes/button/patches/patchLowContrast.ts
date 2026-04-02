@@ -27,4 +27,4 @@ export const patchLowContrast = {
       }),
     };
   },
-} satisfies Patch<ButtonModel>;
+} as const satisfies Patch<ButtonModel>;

@@ -25,4 +25,4 @@ export const patchPasswordRevealDiv = {
       }),
     };
   },
-} satisfies Patch<FormModel>;
+} as const satisfies Patch<FormModel>;

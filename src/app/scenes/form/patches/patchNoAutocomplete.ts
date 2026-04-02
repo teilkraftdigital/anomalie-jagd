@@ -18,4 +18,4 @@ export const patchNoAutocomplete = {
       }),
     };
   },
-} satisfies Patch<FormModel>;
+} as const satisfies Patch<FormModel>;

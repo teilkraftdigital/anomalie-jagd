@@ -11,4 +11,4 @@ export const patchNoRequiredNote = {
       blocks: model.blocks.filter((block) => block.type !== "required-note"),
     };
   },
-} satisfies Patch<FormModel>;
+} as const satisfies Patch<FormModel>;

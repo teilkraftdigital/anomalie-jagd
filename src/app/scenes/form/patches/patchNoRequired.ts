@@ -17,4 +17,4 @@ export const patchNoRequired = {
       }),
     };
   },
-} satisfies Patch<FormModel>;
+} as const satisfies Patch<FormModel>;

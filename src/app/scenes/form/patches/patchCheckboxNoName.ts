@@ -22,4 +22,4 @@ export const patchCheckboxNoName = {
       }),
     };
   },
-} satisfies Patch<FormModel>;
+} as const satisfies Patch<FormModel>;

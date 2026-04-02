@@ -24,4 +24,4 @@ export const patchNoAriaDescribedby = {
       }),
     };
   },
-} satisfies Patch<FormModel>;
+} as const satisfies Patch<FormModel>;

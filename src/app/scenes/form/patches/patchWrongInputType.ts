@@ -18,4 +18,4 @@ export const patchWrongInputType = {
       }),
     };
   },
-} satisfies Patch<FormModel>;
+} as const satisfies Patch<FormModel>;

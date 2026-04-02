@@ -20,4 +20,4 @@ export const patchNoLabel = {
       }),
     };
   },
-} satisfies Patch<ButtonModel>;
+} as const satisfies Patch<ButtonModel>;

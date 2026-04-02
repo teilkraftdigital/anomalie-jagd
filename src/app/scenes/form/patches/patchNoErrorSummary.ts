@@ -11,4 +11,4 @@ export const patchNoErrorSummary = {
       blocks: model.blocks.filter((block) => block.type !== "error-summary"),
     };
   },
-} satisfies Patch<FormModel>;
+} as const satisfies Patch<FormModel>;
