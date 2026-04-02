@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, type ReactNode } from "react";
 import { html as beautifyHtml } from "js-beautify";
+import { useShikiHighlight } from "../../hooks/useShikiHighlight";
 
 type Tab = "vorschau" | "quellcode";
 
@@ -25,6 +26,7 @@ function serializeScene(innerHTML: string): string {
 export function GameLayout({ children }: { children: ReactNode }) {
   const [activeTab, setActiveTab] = useState<Tab>("vorschau");
   const [serializedHtml, setSerializedHtml] = useState<string>("");
+  const highlightedHtml = useShikiHighlight(serializedHtml);
   const vorschauTabRef = useRef<HTMLButtonElement>(null);
   const quellcodeTabRef = useRef<HTMLButtonElement>(null);
   const sceneContentRef = useRef<HTMLDivElement>(null);
@@ -122,9 +124,16 @@ export function GameLayout({ children }: { children: ReactNode }) {
           hidden={activeTab !== "quellcode"}
           className="bg-white"
         >
-          <pre className="overflow-auto p-4 text-xs leading-relaxed text-slate-800 font-mono">
-            <code>{serializedHtml}</code>
-          </pre>
+          {highlightedHtml ? (
+            <div
+              className="overflow-auto p-4 text-xs [&_pre]:bg-white! [&_pre]:m-0! [&_pre]:p-0! [&_pre]:font-mono [&_pre]:leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: highlightedHtml }}
+            />
+          ) : (
+            <pre className="overflow-auto p-4 text-xs leading-relaxed text-slate-800 font-mono">
+              <code>{serializedHtml}</code>
+            </pre>
+          )}
         </div>
       </div>
     </section>
