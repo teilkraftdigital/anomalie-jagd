@@ -6,7 +6,7 @@ export const patchNoRequiredNote: Patch<FormModel> = {
   label: "Kein Pflichtfeld-Hinweis",
   severity: "easy",
   explanation:
-    'Der Hinweis "* Alle Felder sind Pflichtfelder" fehlt. Nutzer — besonders mit kognitiven Einschränkungen oder Screenreader — wissen dann nicht, dass alle Felder ausgefüllt werden müssen, bevor sie das Formular absenden.',
+    'Der Hinweis "* Alle Felder sind Pflichtfelder" fehlt. Nutzer — besonders mit kognitiven Einschränkungen — wissen dann nicht, dass alle Felder ausgefüllt werden müssen, bevor sie das Formular absenden.',
   apply(model) {
     return {
       ...model,
