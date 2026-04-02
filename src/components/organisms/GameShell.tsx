@@ -23,13 +23,20 @@ function serializeScene(innerHTML: string): string {
   });
 }
 
+function stripClasses(html: string): string {
+  return html.replace(/class="[^"]*"/g, 'class="…"');
+}
+
 export function GameLayout({ children }: { children: ReactNode }) {
   const [activeTab, setActiveTab] = useState<Tab>("vorschau");
   const [serializedHtml, setSerializedHtml] = useState<string>("");
-  const highlightedHtml = useShikiHighlight(serializedHtml);
+  const [showClasses, setShowClasses] = useState(true);
   const vorschauTabRef = useRef<HTMLButtonElement>(null);
   const quellcodeTabRef = useRef<HTMLButtonElement>(null);
   const sceneContentRef = useRef<HTMLDivElement>(null);
+
+  const displayHtml = showClasses ? serializedHtml : stripClasses(serializedHtml);
+  const highlightedHtml = useShikiHighlight(displayHtml);
 
   useEffect(() => {
     if (activeTab === "quellcode" && sceneContentRef.current) {
@@ -46,6 +53,9 @@ export function GameLayout({ children }: { children: ReactNode }) {
       vorschauTabRef.current?.focus();
     }
   };
+
+  const codeClasses =
+    "overflow-auto p-4 text-xs font-mono leading-relaxed whitespace-pre-wrap break-words";
 
   return (
     <section
@@ -124,14 +134,27 @@ export function GameLayout({ children }: { children: ReactNode }) {
           hidden={activeTab !== "quellcode"}
           className="bg-white"
         >
+          <div className="flex items-center gap-2 px-4 pt-3 pb-1 border-b border-slate-100">
+            <button
+              aria-pressed={!showClasses}
+              onClick={() => setShowClasses((v) => !v)}
+              className={`px-2 py-0.5 text-xs rounded border font-mono transition-colors ${
+                !showClasses
+                  ? "bg-slate-700 text-white border-slate-700"
+                  : "bg-white text-slate-500 border-slate-300 hover:border-slate-400"
+              }`}
+            >
+              class="…"
+            </button>
+          </div>
           {highlightedHtml ? (
             <div
-              className="overflow-auto p-4 text-xs [&_pre]:bg-white! [&_pre]:m-0! [&_pre]:p-0! [&_pre]:font-mono [&_pre]:leading-relaxed"
+              className={`${codeClasses} [&_pre]:bg-white! [&_pre]:m-0! [&_pre]:p-0! [&_pre]:whitespace-pre-wrap! [&_pre]:wrap-break-word!`}
               dangerouslySetInnerHTML={{ __html: highlightedHtml }}
             />
           ) : (
-            <pre className="overflow-auto p-4 text-xs leading-relaxed text-slate-800 font-mono">
-              <code>{serializedHtml}</code>
+            <pre className={`${codeClasses} text-slate-800`}>
+              <code>{displayHtml}</code>
             </pre>
           )}
         </div>
