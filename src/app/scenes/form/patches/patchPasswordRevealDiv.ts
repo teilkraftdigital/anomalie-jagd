@@ -18,7 +18,6 @@ export const patchPasswordRevealDiv = {
             revealButton: {
               ...block.content.revealButton,
               as: "div" as const,
-              attrs: { "aria-label": "Passwort anzeigen" },
             },
           },
         };

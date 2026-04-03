@@ -121,12 +121,12 @@ export function createFormBaseModel(): FormModel {
         type: "input",
         content: {
           inputType: "checkbox",
+          labelTag: "label",
           required: true,
           requiredLabel: undefined,
           checkboxLabel: f("renderer.fields.agb.checkboxLabel"),
           attrs: {
             id: "agb",
-            "aria-label": f("renderer.fields.agb.checkboxLabel"),
           },
           validation: {
             required: { message: f("renderer.fields.agb.validation.required") },

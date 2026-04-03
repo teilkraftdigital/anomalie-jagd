@@ -21,8 +21,8 @@ export function BaseLayout({
   }
 
   return (
-    <div className="bg-slate-900">
-      <div className="mx-auto max-w-4xl container text-white px-4 min-h-screen">
+    <div className="bg-slate-900 flex">
+      <div className="mx-auto max-w-4xl container text-white px-4 min-h-screen flex flex-col">
         <header
           className={`py-4 flex ${navItems ? "justify-between" : "justify-end"} items-center`}
         >
@@ -59,11 +59,11 @@ export function BaseLayout({
           </aside>
         </header>
 
-        <main className="min-h-[60vh] flex items-center flex-col">
+        <main className="min-h-[60vh] flex items-center flex-col grow">
           {children}
         </main>
 
-        <footer className="text-slate-400 text-sm font-mono flex justify-between">
+        <footer className="text-slate-400 text-sm font-mono flex justify-between py-6  ">
           <div>
             v{__APP_VERSION__} - {t("pages.start.footerBy")}{" "}
             <a

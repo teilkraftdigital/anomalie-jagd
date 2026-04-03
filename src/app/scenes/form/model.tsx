@@ -19,6 +19,7 @@ export type InputContent = {
   required?: boolean;
   requiredLabel?: string;
   autocomplete?: string;
+  labelTag?: "label" | "div" | "span";
   hint?: string;
   attrs?: HTMLAttributes<HTMLInputElement> & Record<string, any>;
   revealButton?: {
@@ -32,7 +33,10 @@ export type InputContent = {
 
 export type FormBlock =
   | { type: "input"; content: InputContent }
-  | { type: "heading"; content: { as: "h1" | "h2" | "h3" | "div" | "p"; text?: string } }
+  | {
+      type: "heading";
+      content: { as: "h1" | "h2" | "h3" | "div" | "p"; text?: string };
+    }
   | { type: "error-summary" }
   | { type: "required-note" }
   | {

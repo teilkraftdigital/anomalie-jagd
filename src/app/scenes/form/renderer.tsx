@@ -45,6 +45,7 @@ function InputField({
     revealButton,
     checkboxLabel,
     errorDisplay,
+    labelTag,
   } = content;
 
   const hasError = !!error;
@@ -52,9 +53,10 @@ function InputField({
   const { "aria-describedby": modelDescribedBy, ...restAttrs } = attrs ?? {};
 
   if (inputType === "checkbox") {
+    const As = labelTag ?? "label";
     return (
       <div className="flex flex-col gap-1">
-        <div className="flex items-center gap-2 ">
+        <As className="flex items-center gap-2 ">
           <input
             type="checkbox"
             required={required}
@@ -76,7 +78,7 @@ function InputField({
               )}
             </span>
           )}
-        </div>
+        </As>
         {showMessage && (
           <p id={`${attrs?.id}-error`} className="text-xs text-red-600">
             {error!.message}
@@ -134,7 +136,10 @@ function InputField({
         )}
       </div>
       {content.hint && (
-        <p id={`${fieldId}-hint`} className={twMerge("text-xs text-slate-500 mt-1", hintClass)}>
+        <p
+          id={`${fieldId}-hint`}
+          className={twMerge("text-xs text-slate-500 mt-1", hintClass)}
+        >
           {content.hint}
         </p>
       )}
@@ -177,86 +182,86 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
       {model.blocks.map((block, i) => {
-          if (block.type === "heading") {
-            const As = block.content.as;
-            return (
-              <As key={i} className="text-2xl font-bold mb-2 tracking-tight">
-                {block.content.text}
-              </As>
-            );
-          }
+        if (block.type === "heading") {
+          const As = block.content.as;
+          return (
+            <As key={i} className="text-2xl font-bold mb-2 tracking-tight">
+              {block.content.text}
+            </As>
+          );
+        }
 
-          if (block.type === "error-summary") {
-            if (!submitted || errors.length === 0) return null;
-            return (
-              <div
-                key={i}
-                ref={summaryRef}
-                tabIndex={-1}
-                role="status"
-                aria-label={t("renderer.errorSummary.label")}
-                className="border border-red-400 bg-red-50 rounded-lg p-4 text-sm text-red-800 focus:outline-none"
-              >
-                <p className="font-semibold mb-2">
-                  {t("renderer.errorSummary.intro")}
-                </p>
-                <ul className="list-disc list-inside flex flex-col gap-1">
-                  {errors.map((err) => (
-                    <li key={err.fieldId}>
-                      <a
-                        href={`#${err.fieldId}`}
-                        className="underline hover:no-underline"
-                      >
-                        {err.message}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          }
-
-          if (block.type === "required-note") {
-            return (
-              <p key={i} className="text-xs text-slate-600">
-                <span aria-hidden="true">*</span> {t("renderer.requiredNote")}
+        if (block.type === "error-summary") {
+          if (!submitted || errors.length === 0) return null;
+          return (
+            <div
+              key={i}
+              ref={summaryRef}
+              tabIndex={-1}
+              role="status"
+              aria-label={t("renderer.errorSummary.label")}
+              className="border border-red-400 bg-red-50 rounded-lg p-4 text-sm text-red-800 focus:outline-none"
+            >
+              <p className="font-semibold mb-2">
+                {t("renderer.errorSummary.intro")}
               </p>
-            );
-          }
+              <ul className="list-disc list-inside flex flex-col gap-1">
+                {errors.map((err) => (
+                  <li key={err.fieldId}>
+                    <a
+                      href={`#${err.fieldId}`}
+                      className="underline hover:no-underline"
+                    >
+                      {err.message}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        }
 
-          if (block.type === "input") {
-            const id = block.content.attrs?.id as string | undefined;
-            const error = id ? getError(id) : undefined;
-            return (
-              <InputField
-                key={i}
-                content={block.content}
-                value={
-                  values[id ?? ""] ??
-                  (block.content.inputType === "checkbox" ? false : "")
-                }
-                onChange={(val) =>
-                  setValues((prev) => ({ ...prev, [id ?? i]: val }))
-                }
-                error={error}
-              />
-            );
-          }
+        if (block.type === "required-note") {
+          return (
+            <p key={i} className="text-xs text-slate-600">
+              <span aria-hidden="true">*</span> {t("renderer.requiredNote")}
+            </p>
+          );
+        }
 
-          if (block.type === "submit") {
-            return (
-              <button
-                key={i}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
-                {...block.content.attrs}
-              >
-                {block.content.label ?? t("renderer.submitFallback")}
-              </button>
-            );
-          }
+        if (block.type === "input") {
+          const id = block.content.attrs?.id as string | undefined;
+          const error = id ? getError(id) : undefined;
+          return (
+            <InputField
+              key={i}
+              content={block.content}
+              value={
+                values[id ?? ""] ??
+                (block.content.inputType === "checkbox" ? false : "")
+              }
+              onChange={(val) =>
+                setValues((prev) => ({ ...prev, [id ?? i]: val }))
+              }
+              error={error}
+            />
+          );
+        }
 
-          return null;
-        })}
+        if (block.type === "submit") {
+          return (
+            <button
+              key={i}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+              {...block.content.attrs}
+            >
+              {block.content.label ?? t("renderer.submitFallback")}
+            </button>
+          );
+        }
+
+        return null;
+      })}
     </form>
   );
 }

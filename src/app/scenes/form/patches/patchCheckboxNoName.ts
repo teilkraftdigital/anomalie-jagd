@@ -1,6 +1,5 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
-import { patchAttrs } from "../../../engine/patchEngine";
 
 export const patchCheckboxNoName = {
   id: "form-patch-checkbox-no-name",
@@ -16,7 +15,7 @@ export const patchCheckboxNoName = {
           ...block,
           content: {
             ...block.content,
-            attrs: patchAttrs(block.content.attrs, { remove: ["aria-label"] }),
+            labelTag: "div" as const,
           },
         };
       }),
