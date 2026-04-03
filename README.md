@@ -38,7 +38,7 @@ npm run dev
 Einzelne Anomalien lassen sich direkt über URL-Parameter testen — kein aktives Spiel nötig:
 
 ```
-/spiel?debug=true&scene=button&patch=patch-id
+/game?debug=true&scene=button&patch=patch-id
 ```
 
 Die URLs sind bookmarkbar.

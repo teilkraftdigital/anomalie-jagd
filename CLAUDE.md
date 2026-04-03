@@ -85,12 +85,12 @@ Key actions:
 |---|---|
 | `/` | StartPage |
 | `/level-select` | Scene + difficulty selection, calls `startGame()` |
-| `/spiel` | GamePage — requires active game (guard in `useGameSession` redirects to `/level-select`) |
-| `/spiel?debug=true&scene=button&patch=patch-id` | Debug mode — bypasses guard, replaces Toolbar with DebugBar |
+| `/game` | GamePage — requires active game (guard in `useGameSession` redirects to `/level-select`) |
+| `/game?debug=true&scene=button&patch=patch-id` | Debug mode — bypasses guard, replaces Toolbar with DebugBar |
 | `/glossar` | Always-accessible glossar, shows discovered anomalies |
 
 ### Debug mode
-`/spiel?debug=true` replaces the Toolbar with `DebugBar` (`src/components/organisms/DebugBar.tsx`). Scene and patch are controlled via URL params — URLs are bookmarkable. Logic is encapsulated in `useDebugMode` hook. No game state needed.
+`/game?debug=true` replaces the Toolbar with `DebugBar` (`src/components/organisms/DebugBar.tsx`). Scene and patch are controlled via URL params — URLs are bookmarkable. Logic is encapsulated in `useDebugMode` hook. No game state needed.
 
 ### Scene model types
 Each scene defines its own model extending `BaseModel<TBlock>` (from `src/app/engine/models/BaseModel.ts`), which is `{ title: string; blocks: TBlock[] }`. Block types are discriminated unions on `type`:

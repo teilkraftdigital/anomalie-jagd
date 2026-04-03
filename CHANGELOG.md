@@ -5,6 +5,45 @@ Alle nennenswerten Änderungen am Projekt werden in dieser Datei dokumentiert.
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 Versionierung folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.5.1] — 2026-04-03
+
+### Geändert
+
+- Route `/spiel` umbenannt zu `/game` — einheitliche Englisch-Konvention für alle Pfade
+
+---
+
+## [0.5.0] — 2026-04-03
+
+### Hinzugefügt
+
+**Internationalisierung (react-i18next)**
+
+- `react-i18next` + `i18next` eingerichtet; Sprachumschalter (DE/EN) in der Toolbar
+- `common`-Namespace für globale UI-Strings (Toolbar, Seiten, Glossar, Schwierigkeitsgrade)
+- Pro-Szene-Namespaces (`scene-button`, `scene-form`) mit `i18n.addResourceBundle()` in `App.tsx` registriert
+- Szenen-Locale-Dateien: `de.ts` / `en.ts` pro Szene unter `src/app/scenes/{id}/locale/`
+- Alle Szenen-Strings (Scenenname, -beschreibung, Renderer-Labels, Patch-Label + -Erklärung) vollständig übersetzt
+
+**Domain-Typen**
+
+- `src/app/engine/locale/types.ts` — generischer `SceneLocale<TRenderer, TPatches extends string>` als Engine-seitige Basis für alle Szenen-Locale-Typen
+- `ButtonSceneLocale` / `FormSceneLocale` nutzen den generischen Typ; `TPatches` wird aus den `patches`-Arrays inferiert
+
+### Geändert
+
+- `Scene<TModel>`: `name` und `description` entfernt — gehören jetzt in die Locale-Dateien, nicht mehr ins Scene-Objekt
+- `Patch<TModel>`: `label` und `explanation` entfernt, `scene: string` hinzugefügt (wird für Locale-Namespace-Zuordnung benötigt)
+- Alle Patches umgestellt auf `as const satisfies Patch<TModel>` — `as const` erhält Literal-Typen für volle Autocomplete-Unterstützung auf `PatchId`; `satisfies` validiert die Struktur
+- `patches/index.ts` beider Szenen: explizite `: Patch<any>[]`-Annotation entfernt — notwendig damit `(typeof patches)[number]["id"]` als Union der Literal-Typen auflöst statt `string`
+- `createButtonBaseModel()` / `createFormBaseModel()` sind jetzt Funktionen statt Konstanten — Übersetzungen werden zur Spielstart-Zeit aufgelöst, nicht beim Modul-Load
+
+### Behoben
+
+- Tests: `setup.ts` setzt `i18n.changeLanguage("de")` — verhindert, dass jsdom-Standard (`en`) alle deutschen Textassertionen brechen lässt
+
+---
+
 ## [0.4.2] — 2026-04-02
 
 ### Verbessert
@@ -228,7 +267,7 @@ Erster spielbarer Stand. Vollständiger Game Loop, zwei Szenen, Glossar und Debu
 
 **Debug-Modus**
 
-- `/spiel?debug=true&scene=...&patch=...` — Szene und Patch per URL-Parameter steuerbar
+- `/game?debug=true&scene=...&patch=...` — Szene und Patch per URL-Parameter steuerbar
 - DebugBar ersetzt die Toolbar; URLs sind bookmarkbar
 - Kein aktiver Spielstand nötig
 

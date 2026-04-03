@@ -22,7 +22,7 @@ export function LevelSelectPage() {
   function handleStart() {
     if (!selectedSceneId || !selectedDifficulty) return;
     startGame(selectedSceneId, selectedDifficulty);
-    navigate("/spiel");
+    navigate("/game");
   }
 
   const handleSceneClick = (sceneId: string) => {
@@ -41,8 +41,12 @@ export function LevelSelectPage() {
         </Link>
       </nav>
       <main className="w-full flex flex-col items-center">
-        <h1 className="text-3xl font-bold mb-2">{t("pages.levelSelect.title")}</h1>
-        <p className="text-slate-400 mb-10">{t("pages.levelSelect.subtitle")}</p>
+        <h1 className="text-3xl font-bold mb-2">
+          {t("pages.levelSelect.title")}
+        </h1>
+        <p className="text-slate-400 mb-10">
+          {t("pages.levelSelect.subtitle")}
+        </p>
 
         {/* Scene selection */}
         <div className="w-full max-w-2xl mb-8">

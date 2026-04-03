@@ -26,13 +26,13 @@ afterEach(() => {
 
 describe("GamePage — Smoke", () => {
   it("rendert ohne Crash bei aktivem Spielstand", () => {
-    renderWithRouter(<GamePage />, { route: "/spiel" });
+    renderWithRouter(<GamePage />, { route: "/game" });
     // Toolbar ist sichtbar → Spiel aktiv
     expect(screen.getByText("Anomalie gefunden")).toBeInTheDocument();
   });
 
   it("zeigt Runde-1-Hinweisbanner an", () => {
-    renderWithRouter(<GamePage />, { route: "/spiel" });
+    renderWithRouter(<GamePage />, { route: "/game" });
     expect(screen.getByText(/Runde 1:/)).toBeInTheDocument();
   });
 });

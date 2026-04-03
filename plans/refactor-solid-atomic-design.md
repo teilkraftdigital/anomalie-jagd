@@ -93,7 +93,7 @@ Der Store delegiert danach alle Berechnungen an diese Funktionen und hält nur n
 - [ ] `src/hooks/useGameSession.ts` und `src/hooks/useDebugMode.ts` existieren
 - [ ] `GamePage.tsx` enthält keine `useSearchParams`-, `useEffect`- oder Store-Logik mehr — nur Hooks-Aufruf und JSX
 - [ ] Beide Hooks sind unabhängig voneinander importierbar
-- [ ] Debug-Modus (`/spiel?debug=true`) funktioniert weiterhin korrekt
+- [ ] Debug-Modus (`/game?debug=true`) funktioniert weiterhin korrekt
 - [ ] Guard-Redirect bei fehlendem Spielstand funktioniert weiterhin
 - [ ] `npm run build` läuft ohne Fehler durch
 - [ ] CHANGELOG.md aktualisiert
