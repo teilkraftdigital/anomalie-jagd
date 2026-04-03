@@ -1,12 +1,10 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchNoAutocomplete: Patch<FormModel> = {
+export const patchNoAutocomplete = {
   id: "form-patch-no-autocomplete",
-  label: "Kein autocomplete am Passwort-Feld",
+  scene: "form",
   severity: "hard",
-  explanation:
-    'Ohne autocomplete="new-password" können Passwortmanager das Feld nicht korrekt befüllen. Nutzer mit kognitiven Einschränkungen sind besonders auf Passwortmanager angewiesen.',
   apply(model) {
     return {
       ...model,
@@ -20,4 +18,4 @@ export const patchNoAutocomplete: Patch<FormModel> = {
       }),
     };
   },
-};
+} as const satisfies Patch<FormModel>;

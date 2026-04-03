@@ -18,8 +18,6 @@ export function getScene(sceneId: string) {
 export function listScenes() {
   return Array.from(sceneRegistry.values()).map((s) => ({
     id: s.id,
-    name: s.name,
-    description: s.description,
     patches: s.patches,
   }));
 }

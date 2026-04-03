@@ -1,12 +1,10 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchRequiredLabelOnly: Patch<FormModel> = {
+export const patchRequiredLabelOnly = {
   id: "form-patch-required-label-only",
-  label: "Pflichtfeld-Stern im Label, kein required-Attribut",
+  scene: "form",
   severity: "medium",
-  explanation:
-    'Das visuelle "*" im Label täuscht ein Pflichtfeld vor, aber ohne required="true" erkennen Browser und assistive Technologien das Feld nicht als Pflichtfeld. Validierung funktioniert nicht.',
   apply(model) {
     return {
       ...model,
@@ -23,4 +21,4 @@ export const patchRequiredLabelOnly: Patch<FormModel> = {
       }),
     };
   },
-};
+} as const satisfies Patch<FormModel>;

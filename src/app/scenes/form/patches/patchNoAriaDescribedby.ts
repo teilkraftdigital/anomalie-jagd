@@ -2,12 +2,10 @@ import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 import { patchAttrs } from "../../../engine/patchEngine";
 
-export const patchNoAriaDescribedby: Patch<FormModel> = {
+export const patchNoAriaDescribedby = {
   id: "form-patch-no-aria-describedby",
-  label: "Passwort-Wiederholung ohne aria-describedby",
+  scene: "form",
   severity: "hard",
-  explanation:
-    "Ohne aria-describedby erhält der Screenreader-Nutzer keinen Hinweis, dass das Feld mit dem Passwort-Feld übereinstimmen muss. Der Hinweistext existiert im DOM, ist aber nicht mit dem Input verknüpft.",
   apply(model) {
     return {
       ...model,
@@ -26,4 +24,4 @@ export const patchNoAriaDescribedby: Patch<FormModel> = {
       }),
     };
   },
-};
+} as const satisfies Patch<FormModel>;

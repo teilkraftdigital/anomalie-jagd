@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { FormModel, InputContent } from "./model";
 import { validateForm, type FieldError, type FormValues } from "./validation";
 
@@ -147,6 +148,7 @@ function InputField({
 }
 
 export function FormSceneRenderer({ model }: { model: FormModel }) {
+  const { t } = useTranslation("scene-form");
   const [values, setValues] = useState<FormValues>({});
   const [errors, setErrors] = useState<FieldError[]>([]);
   const [submitted, setSubmitted] = useState(false);
@@ -170,7 +172,7 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
 
   return (
     <>
-      <h2 className="text-2xl font-bold mb-6 tracking-tight">Registrieren</h2>
+      <h2 className="text-2xl font-bold mb-6 tracking-tight">{t("renderer.heading")}</h2>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
         {model.blocks.map((block, i) => {
           if (block.type === "error-summary") {
@@ -181,11 +183,11 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
                 ref={summaryRef}
                 tabIndex={-1}
                 role="status"
-                aria-label="Fehlerübersicht"
+                aria-label={t("renderer.errorSummary.label")}
                 className="border border-red-400 bg-red-50 rounded-lg p-4 text-sm text-red-800 focus:outline-none"
               >
                 <p className="font-semibold mb-2">
-                  Bitte korrigiere die folgenden Fehler:
+                  {t("renderer.errorSummary.intro")}
                 </p>
                 <ul className="list-disc list-inside flex flex-col gap-1">
                   {errors.map((err) => (
@@ -206,7 +208,7 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
           if (block.type === "required-note") {
             return (
               <p key={i} className="text-xs text-slate-600">
-                <span aria-hidden="true">*</span> Alle Felder sind Pflichtfelder
+                <span aria-hidden="true">*</span> {t("renderer.requiredNote")}
               </p>
             );
           }
@@ -237,7 +239,7 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
                 className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
                 {...block.content.attrs}
               >
-                {block.content.label ?? "Absenden"}
+                {block.content.label ?? t("renderer.submitFallback")}
               </button>
             );
           }

@@ -1,12 +1,10 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchWrongInputType: Patch<FormModel> = {
+export const patchWrongInputType = {
   id: "form-patch-wrong-input-type",
-  label: "Falscher input type (text statt email)",
+  scene: "form",
   severity: "medium",
-  explanation:
-    'type="email" aktiviert die E-Mail-Tastatur auf Mobilgeräten, validiert das Format und hilft Passwortmanagern. type="text" deaktiviert all das.',
   apply(model) {
     return {
       ...model,
@@ -20,4 +18,4 @@ export const patchWrongInputType: Patch<FormModel> = {
       }),
     };
   },
-};
+} as const satisfies Patch<FormModel>;

@@ -1,12 +1,10 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchNoRequired: Patch<FormModel> = {
+export const patchNoRequired = {
   id: "form-patch-no-required",
-  label: "Pflichtfeld ohne required-Attribut",
+  scene: "form",
   severity: "medium",
-  explanation:
-    "Ohne required können assistive Technologien das Feld nicht als Pflichtfeld ankündigen. Nutzer von Screenreadern wissen nicht, dass das Feld ausgefüllt werden muss. Es gibt zwar eine visuelle Kennzeichnung, aber sie ist nicht ausreichend.",
   apply(model) {
     return {
       ...model,
@@ -19,4 +17,4 @@ export const patchNoRequired: Patch<FormModel> = {
       }),
     };
   },
-};
+} as const satisfies Patch<FormModel>;

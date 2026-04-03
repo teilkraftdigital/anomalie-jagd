@@ -1,8 +1,8 @@
+import { useTranslation } from "react-i18next";
 import type { Patch } from "../../app/engine/Scene";
 
 type SceneTab = {
   id: string;
-  name: string;
   patches: Patch<any>[];
 };
 
@@ -19,6 +19,7 @@ export function GlossarTabs({
   activeTab,
   onTabChange,
 }: Props) {
+  const { t } = useTranslation();
   return (
     <div
       role="tablist"
@@ -43,7 +44,7 @@ export function GlossarTabs({
                 : "border-transparent text-slate-400 hover:text-white"
             }`}
           >
-            {scene.name}
+            {t("scene.name", { ns: `scene-${scene.id}` })}
             <span className="ml-2 text-xs font-mono opacity-60">
               {discovered}/{total}
             </span>

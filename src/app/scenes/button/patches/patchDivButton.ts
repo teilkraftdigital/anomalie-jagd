@@ -2,12 +2,10 @@ import type { Patch } from "../../../engine/Scene";
 import { patchAttrs } from "../../../engine/patchEngine";
 import type { ButtonModel } from "../model";
 
-export const patchDivButton: Patch<ButtonModel> = {
+export const patchDivButton = {
   id: "patch-div-button",
-  label: "<div> statt <button>",
+  scene: "button",
   severity: "easy",
-  explanation:
-    "Ein <div> ist kein interaktives Element. Es ist nicht per Tastatur fokussierbar, sendet kein click-Event bei Enter/Space und wird von Screenreadern nicht als solches angekündigt.",
   apply(model) {
     return {
       ...model,
@@ -26,4 +24,4 @@ export const patchDivButton: Patch<ButtonModel> = {
       }),
     };
   },
-} as const;
+} as const satisfies Patch<ButtonModel>;

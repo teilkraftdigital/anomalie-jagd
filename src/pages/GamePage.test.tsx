@@ -33,8 +33,6 @@ describe("GamePage — Smoke", () => {
 
   it("zeigt Runde-1-Hinweisbanner an", () => {
     renderWithRouter(<GamePage />, { route: "/spiel" });
-    expect(
-      screen.getByText(/Runde 1: Schau dir die Scene genau an/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Runde 1:/)).toBeInTheDocument();
   });
 });

@@ -2,12 +2,10 @@ import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 import { patchAttrs } from "../../../engine/patchEngine";
 
-export const patchCheckboxNoName: Patch<FormModel> = {
+export const patchCheckboxNoName = {
   id: "form-patch-checkbox-no-name",
-  label: "Checkbox ohne zugänglichen Namen",
+  scene: "form",
   severity: "hard",
-  explanation:
-    "Eine Checkbox mit sichtbarem Label-Text jedoch ohne aria-label oder label-Element hat keinen zugänglichen Namen. Screenreader können den Zweck der Checkbox nicht kommunizieren.",
   apply(model) {
     return {
       ...model,
@@ -24,4 +22,4 @@ export const patchCheckboxNoName: Patch<FormModel> = {
       }),
     };
   },
-};
+} as const satisfies Patch<FormModel>;

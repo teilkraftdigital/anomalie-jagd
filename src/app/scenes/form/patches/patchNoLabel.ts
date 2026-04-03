@@ -1,12 +1,10 @@
 import type { Patch } from "../../../engine/Scene";
 import type { FormModel } from "../model";
 
-export const patchNoLabel: Patch<FormModel> = {
+export const patchNoLabel = {
   id: "form-patch-no-label",
-  label: "Keine Label an Input-Feldern",
+  scene: "form",
   severity: "easy",
-  explanation:
-    "Alle Inputs ohne zugehöriges <label> haben keinen zugänglichen Namen. Screenreader können den Zweck des Feldes nicht kommunizieren.",
   apply(model) {
     return {
       ...model,
@@ -23,4 +21,4 @@ export const patchNoLabel: Patch<FormModel> = {
       }),
     };
   },
-};
+} as const satisfies Patch<FormModel>;

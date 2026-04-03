@@ -1,12 +1,10 @@
 import type { Patch } from "../../../engine/Scene";
 import type { ButtonModel } from "../model";
 
-export const patchRoleAttribute: Patch<ButtonModel> = {
+export const patchRoleAttribute = {
   id: "patch-role-attribute",
-  label: "Falsches role-Attribut",
+  scene: "button",
   severity: "medium",
-  explanation:
-    'role="link" auf einem <button> ist semantisch falsch. Assistive Technologien erwarten dann Navigationsverhalten (href), finden aber keines.',
   apply(model) {
     return {
       ...model,
@@ -22,4 +20,4 @@ export const patchRoleAttribute: Patch<ButtonModel> = {
       }),
     };
   },
-} as const;
+} as const satisfies Patch<ButtonModel>;
