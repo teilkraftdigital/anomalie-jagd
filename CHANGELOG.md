@@ -5,6 +5,18 @@ Alle nennenswerten Änderungen am Projekt werden in dieser Datei dokumentiert.
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 Versionierung folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.5.4] — 2026-04-03
+
+### Geändert
+
+- `InputContent`: neues optionales Feld `labelTag?: "label" | "div" | "span"` — das Wrapper-Element der Checkbox-Beschriftung ist jetzt patchbar
+- `patchCheckboxNoName`: setzt `labelTag: "div"` statt `aria-label` zu entfernen — `<div>` hat keine implizite Label-Semantik, was die Anomalie korrekt modelliert
+- `patchPasswordRevealDiv`: überflüssiges `aria-label` aus dem Patch entfernt — der Reveal-`<div>` soll bewusst keinen zugänglichen Namen haben
+- `base.tsx`: Checkbox erhält explizites `labelTag: "label"` und kein redundantes `aria-label` mehr im `attrs`-Objekt
+- `BaseLayout`: `flex flex-col` auf dem Container, `grow` auf `<main>`, Footer mit `py-6` — Footer klebt nicht mehr am Inhalt
+
+---
+
 ## [0.5.3] — 2026-04-03
 
 ### Hinzugefügt
