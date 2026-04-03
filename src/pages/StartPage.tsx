@@ -1,27 +1,14 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { BaseLayout } from "../components/organisms/BaseLayout";
 
 export function StartPage() {
-  const { t, i18n } = useTranslation();
-
-  function handleLangToggle() {
-    const next = i18n.language.startsWith("de") ? "en" : "de";
-    i18n.changeLanguage(next);
-    localStorage.setItem("lang", next);
-  }
+  const { t } = useTranslation();
 
   const steps = t("pages.start.steps", { returnObjects: true }) as string[];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-900 text-white px-4">
-      <button
-        onClick={handleLangToggle}
-        aria-label={t("lang.label")}
-        className="absolute top-4 right-6 text-slate-400 hover:text-white text-sm font-mono transition-colors"
-      >
-        {t("lang.switchTo")}
-      </button>
-
+    <BaseLayout>
       <h1 className="text-5xl font-bold mb-4 tracking-tight">anomalie jagd</h1>
       <p className="text-slate-400 text-lg mb-10 max-w-md text-center">
         {t("pages.start.subtitle")}
@@ -43,26 +30,16 @@ export function StartPage() {
 
       <Link
         to="/level-select"
-        className="bg-white text-slate-900 font-bold px-8 py-3 rounded-lg hover:bg-slate-200 transition-colors"
+        className="bg-white text-slate-900 font-bold px-8 py-3 rounded-lg hover:bg-slate-200 motion-safe:transition-colors"
       >
         {t("pages.start.play")}
       </Link>
       <Link
         to="/glossar"
-        className="mt-4 text-slate-400 hover:text-white text-sm transition-colors"
+        className="mt-4 text-slate-400 hover:text-white text-sm motion-safe:transition-colors"
       >
         {t("pages.start.glossar")}
       </Link>
-
-      <footer className="absolute bottom-4 text-slate-400 text-xs font-mono">
-        v{__APP_VERSION__} - {t("pages.start.footerBy")}{" "}
-        <a
-          href="https://teilkraft.digital?utm_source=anomalie-jagd"
-          className="underline hover:text-white"
-        >
-          teil:kraft digital
-        </a>
-      </footer>
-    </div>
+    </BaseLayout>
   );
 }

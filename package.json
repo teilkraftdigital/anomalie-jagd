@@ -1,7 +1,7 @@
 {
   "name": "anomalie-jagd",
   "private": true,
-  "version": "0.5.1",
+  "version": "0.5.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,6 +14,7 @@
     "@tailwindcss/vite": "^4.2.2",
     "i18next": "^26.0.3",
     "js-beautify": "^1.15.4",
+    "lucide-react": "^1.7.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-i18next": "^17.0.2",

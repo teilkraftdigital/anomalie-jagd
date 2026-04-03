@@ -32,12 +32,19 @@ const en = {
     hard: "Hard",
   },
   pages: {
+    common: {
+      back: "Back",
+      openInNewTab: " (opens in a new tab)",
+      navigation: "Main navigation",
+    },
     start: {
       subtitle:
         "Can you spot the accessibility issues before anyone else does?",
       play: "Play",
       glossar: "View glossary",
       footerBy: "A project by",
+      footerPrivacy: "Privacy",
+      footerImprint: "Imprint",
       steps: [
         "You see a simulated web component — interact with it and look closely.",
         'Decide: Does it contain an accessibility anomaly? Click "Anomaly found" or "No anomaly".',
@@ -64,7 +71,10 @@ const en = {
     },
   },
   lang: {
-    switchTo: "DE",
+    switchToEn: "EN",
+    switchToDe: "DE",
+    labelDe: "Switch to German",
+    labelEn: "Switch to English",
     label: "Switch language",
   },
 } as const;

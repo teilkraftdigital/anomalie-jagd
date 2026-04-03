@@ -22,7 +22,7 @@ export default function DifficultyCard({
       }`}
     >
       <div className="font-bold">{t(`difficulty.${value}.label`)}</div>
-      <div className="text-slate-300 text-xs mt-1">
+      <div className="text-slate-300 text-sm mt-1">
         {t(`difficulty.${value}.description`)}
       </div>
       <input

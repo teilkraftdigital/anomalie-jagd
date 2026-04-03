@@ -32,12 +32,19 @@ const de = {
     hard: "Schwer",
   },
   pages: {
+    common: {
+      back: "Zurück",
+      openInNewTab: " (öffnet in neuem Tab)",
+      navigation: "Hauptnavigation",
+    },
     start: {
       subtitle:
         "Kannst du die Barrierefreiheits-Fehler finden, bevor sie anderen auffallen?",
       play: "Spielen",
       glossar: "Glossar ansehen",
       footerBy: "Ein Projekt von",
+      footerPrivacy: "Datenschutz",
+      footerImprint: "Impressum",
       steps: [
         "Du siehst eine simulierte Webkomponente — interagiere damit und schau genau hin.",
         'Entscheide: Enthält sie eine Barrierefreiheits-Anomalie? Klick auf "Anomalie gefunden" oder "Keine Anomalie".',
@@ -64,7 +71,8 @@ const de = {
     },
   },
   lang: {
-    switchTo: "EN",
+    switchToEn: "EN",
+    switchToDe: "DE",
     label: "Sprache wechseln",
   },
 } as const;
