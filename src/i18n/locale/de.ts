@@ -75,6 +75,17 @@ const de = {
     switchToDe: "DE",
     label: "Sprache wechseln",
   },
+  debugBar: {
+    debug: "Debug",
+    toggle: {
+      open: "einklappen",
+      close: "ausklappen",
+    },
+    scene: "Scene",
+    patch: "Patch",
+    patchId: "Patch ID",
+    patchExplanation: "Erklärung",
+  },
 } as const;
 
 export default de;

@@ -77,6 +77,17 @@ const en = {
     labelEn: "Switch to English",
     label: "Switch language",
   },
+  debugBar: {
+    debug: "Debug",
+    toggle: {
+      open: "collapse",
+      close: "expand",
+    },
+    scene: "Scene",
+    patch: "Patch",
+    patchId: "Patch ID",
+    patchExplanation: "Explanation",
+  },
 } as const;
 
 export default en;
