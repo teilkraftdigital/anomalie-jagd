@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { listScenes, getScene } from "../../app/engine/sceneRegistry";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   sceneId: string;
@@ -14,13 +15,15 @@ export function DebugBar({
   onSceneChange,
   onPatchChange,
 }: Props) {
+  const { t } = useTranslation();
   const severityOrder = { easy: 0, medium: 1, hard: 2 };
 
   const scenes = listScenes();
   const scene = scenes.find((s) => s.id === sceneId);
   const patches = scene
     ? [...getScene(sceneId).patches].sort((a, b) => {
-        const severityDiff = severityOrder[a.severity] - severityOrder[b.severity];
+        const severityDiff =
+          severityOrder[a.severity] - severityOrder[b.severity];
         if (severityDiff !== 0) return severityDiff;
         return a.id.localeCompare(b.id);
       })
@@ -82,7 +85,8 @@ export function DebugBar({
               <option value="">— Kein Patch (clean) —</option>
               {patches.map((p) => (
                 <option key={p.id} value={p.id}>
-                  [{p.severity}] {p.id}
+                  [{p.severity}]{" "}
+                  {t(`patches.${p.id}.label`, { ns: `scene-${p.scene}` })}
                 </option>
               ))}
             </select>
@@ -90,8 +94,17 @@ export function DebugBar({
         </div>
 
         {activePatch && (
-          <div className="text-xs bg-amber-200 rounded px-3 py-2 font-mono">
-            scene: {activePatch.scene} · id: {activePatch.id}
+          <div className=" bg-amber-200 rounded px-3 py-2 ">
+            <h2 className="font-bold">Explanation</h2>
+            <p>
+              {t(`patches.${activePatch.id}.explanation`, {
+                ns: `scene-${activePatch.scene}`,
+              })}
+            </p>
+            <hr className="my-2 opacity-50" />
+            <div className="text-xs text-gray-700 font-mono">
+              scene: {activePatch.scene} · id: {activePatch.id}
+            </div>
           </div>
         )}
       </div>

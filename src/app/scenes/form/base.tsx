@@ -8,6 +8,7 @@ export function createFormBaseModel(): FormModel {
   return {
     title: "form",
     blocks: [
+      { type: "heading", content: { as: "h2", text: f("renderer.heading") } },
       { type: "error-summary" },
       { type: "required-note" },
       {

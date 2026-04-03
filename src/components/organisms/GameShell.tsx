@@ -100,8 +100,8 @@ export function GameLayout({
               onClick={() => setActiveTab("vorschau")}
               className={`px-3 py-1 text-xs rounded font-medium transition-colors ${
                 activeTab === "vorschau"
-                  ? "bg-white text-slate-700 shadow-sm"
-                  : "text-slate-500 hover:text-slate-700"
+                  ? "bg-white text-slate-800 shadow-sm"
+                  : "text-slate-600 hover:text-slate-700"
               }`}
             >
               {t("gameshell.preview")}
@@ -116,8 +116,8 @@ export function GameLayout({
               onClick={() => setActiveTab("quellcode")}
               className={`px-3 py-1 text-xs rounded font-medium transition-colors ${
                 activeTab === "quellcode"
-                  ? "bg-white text-slate-700 shadow-sm"
-                  : "text-slate-500 hover:text-slate-700"
+                  ? "bg-white text-slate-800 shadow-sm"
+                  : "text-slate-600 hover:text-slate-700"
               }`}
             >
               {t("gameshell.source")}

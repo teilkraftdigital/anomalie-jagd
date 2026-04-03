@@ -14,48 +14,48 @@ const en: FormSceneLocale = {
     requiredNote: "All fields are required",
     submitFallback: "Submit",
     fields: {
-    name: {
-      label: "Name",
-      placeholder: "Jane Doe",
-      validation: {
-        required: "Please enter your name.",
-        minLength: "Name must be at least 2 characters long.",
+      name: {
+        label: "Name",
+        placeholder: "Jane Doe",
+        validation: {
+          required: "Please enter your name.",
+          minLength: "Name must be at least 2 characters long.",
+        },
       },
-    },
-    email: {
-      label: "Email",
-      placeholder: "jane@example.com",
-      validation: {
-        required: "Please enter your email address.",
-        pattern: "Please enter a valid email address.",
+      email: {
+        label: "Email",
+        placeholder: "jane@example.com",
+        validation: {
+          required: "Please enter your email address.",
+          pattern: "Please enter a valid email address.",
+        },
       },
-    },
-    password: {
-      label: "Password",
-      placeholder: "••••••••",
-      revealLabel: "Show password",
-      validation: {
-        required: "Please enter a password.",
-        minLength: "Password must be at least 8 characters long.",
+      password: {
+        label: "Password",
+        placeholder: "••••••••",
+        revealLabel: "Show password",
+        validation: {
+          required: "Please enter a password.",
+          minLength: "Password must be at least 8 characters long.",
+        },
       },
-    },
-    passwordRepeat: {
-      label: "Repeat password",
-      placeholder: "••••••••",
-      hint: "Password must match the one above.",
-      revealLabel: "Show password",
-      validation: {
-        required: "Please repeat your password.",
-        match: "Passwords do not match.",
+      passwordRepeat: {
+        label: "Repeat password",
+        placeholder: "••••••••",
+        hint: "Password must match the one above.",
+        revealLabel: "Show password",
+        validation: {
+          required: "Please repeat your password.",
+          match: "Passwords do not match.",
+        },
       },
-    },
-    agb: {
-      checkboxLabel: "I agree to the terms and conditions",
-      validation: {
-        required: "Please agree to the terms and conditions.",
+      agb: {
+        checkboxLabel: "I agree to the terms and conditions",
+        validation: {
+          required: "Please agree to the terms and conditions.",
+        },
       },
-    },
-    submit: { label: "Register" },
+      submit: { label: "Register" },
     },
   },
   patches: {
@@ -113,6 +113,31 @@ const en: FormSceneLocale = {
       label: "No required fields note",
       explanation:
         'The notice "* All fields are required" is missing. Users — especially those with cognitive impairments — do not know that all fields must be filled in before submitting the form.',
+    },
+    "form-patch-submit-no-type": {
+      label: 'Submit button without explicit type="submit"',
+      explanation:
+        'Without type="submit", a <button> inside a form has a default type of "submit". However, if JavaScript is used to handle form submission, the button may not trigger form submission as expected. This can lead to confusion for users relying on assistive technologies.',
+    },
+    "form-patch-low-contrast-label": {
+      label: "Low contrast on form labels",
+      explanation:
+        "The label texts are too light and do not meet the WCAG minimum contrast ratio of 4.5:1 for normal text. People with visual impairments or in bright environments cannot read the labels.",
+    },
+    "form-patch-low-contrast-inputs": {
+      label: "Low contrast on input fields",
+      explanation:
+        "The borders of the input fields are too light. WCAG 1.4.11 requires a contrast ratio of at least 3:1 for UI components. The fields are barely visible — especially for people with visual impairments.",
+    },
+    "form-patch-heading-div": {
+      label: "Form heading as div instead of hX",
+      explanation:
+        "A <div> has no semantic meaning. Screen readers do not recognise it as a heading and do not list it in heading navigation. Users who navigate by headings cannot jump directly to the form.",
+    },
+    "form-patch-low-contrast-hint": {
+      label: "Low contrast on hint text",
+      explanation:
+        "The hint text below the password repeat field is too light. WCAG 1.4.3 applies to small print as well: 4.5:1 contrast for text below 18pt. People with visual impairments cannot read the hint.",
     },
   },
 };

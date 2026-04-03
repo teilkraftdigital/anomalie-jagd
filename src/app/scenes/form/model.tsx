@@ -12,6 +12,9 @@ export type InputContent = {
   inputType: "text" | "email" | "password" | "checkbox";
   label?: string;
   labelAttrs?: { htmlFor?: string; [key: string]: any };
+  labelClass?: string;
+  inputClass?: string;
+  hintClass?: string;
   placeholder?: string;
   required?: boolean;
   requiredLabel?: string;
@@ -29,6 +32,7 @@ export type InputContent = {
 
 export type FormBlock =
   | { type: "input"; content: InputContent }
+  | { type: "heading"; content: { as: "h1" | "h2" | "h3" | "div" | "p"; text?: string } }
   | { type: "error-summary" }
   | { type: "required-note" }
   | {

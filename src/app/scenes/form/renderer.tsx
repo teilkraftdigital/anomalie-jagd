@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
 import type { FormModel, InputContent } from "./model";
 import { validateForm, type FieldError, type FormValues } from "./validation";
 
-const labelClass = "block text-sm font-medium text-slate-700 mb-1 ";
+const labelBaseClass = "block text-sm font-medium text-slate-700 mb-1";
 
 function getInputClass(
   hasError: boolean,
@@ -33,6 +34,9 @@ function InputField({
     inputType,
     label,
     labelAttrs,
+    labelClass,
+    inputClass,
+    hintClass,
     placeholder,
     required,
     requiredLabel,
@@ -90,7 +94,7 @@ function InputField({
   return (
     <div className="flex flex-col">
       {label && (
-        <label className={labelClass} {...labelAttrs}>
+        <label className={twMerge(labelBaseClass, labelClass)} {...labelAttrs}>
           <span>{label}</span>
           {requiredLabel && (
             <span className="text-gray-400 ml-1" aria-hidden="true">
@@ -105,7 +109,7 @@ function InputField({
           placeholder={placeholder}
           required={required}
           autoComplete={autocomplete}
-          className={getInputClass(hasError, errorDisplay)}
+          className={twMerge(getInputClass(hasError, errorDisplay), inputClass)}
           value={value as string}
           onChange={(e) => onChange(e.target.value)}
           aria-invalid={hasError || undefined}
@@ -130,7 +134,7 @@ function InputField({
         )}
       </div>
       {content.hint && (
-        <p id={`${fieldId}-hint`} className="text-xs text-slate-500 mt-1">
+        <p id={`${fieldId}-hint`} className={twMerge("text-xs text-slate-500 mt-1", hintClass)}>
           {content.hint}
         </p>
       )}
@@ -171,10 +175,17 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
   }
 
   return (
-    <>
-      <h2 className="text-2xl font-bold mb-6 tracking-tight">{t("renderer.heading")}</h2>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
-        {model.blocks.map((block, i) => {
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
+      {model.blocks.map((block, i) => {
+          if (block.type === "heading") {
+            const As = block.content.as;
+            return (
+              <As key={i} className="text-2xl font-bold mb-2 tracking-tight">
+                {block.content.text}
+              </As>
+            );
+          }
+
           if (block.type === "error-summary") {
             if (!submitted || errors.length === 0) return null;
             return (
@@ -246,7 +257,6 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
 
           return null;
         })}
-      </form>
-    </>
+    </form>
   );
 }

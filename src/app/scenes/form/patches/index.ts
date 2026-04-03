@@ -10,6 +10,11 @@ import { patchNoAriaDescribedby } from "./patchNoAriaDescribedby";
 import { patchNoErrorSummary } from "./patchNoErrorSummary";
 import { patchErrorBorderOnly } from "./patchErrorBorderOnly";
 import { patchNoRequiredNote } from "./patchNoRequiredNote";
+import { patchSubmitNoType } from "./patchSubmitNoType";
+import { patchLowContrastLabel } from "./patchLowContrastLabel";
+import { patchLowContrastInputs } from "./patchLowContrastInputs";
+import { patchHeadingDiv } from "./patchHeadingDiv";
+import { patchLowContrastHint } from "./patchLowContrastHint";
 
 export const patches = [
   patchNoLabel,
@@ -24,4 +29,9 @@ export const patches = [
   patchNoErrorSummary,
   patchErrorBorderOnly,
   patchNoRequiredNote,
+  patchSubmitNoType,
+  patchLowContrastLabel,
+  patchLowContrastInputs,
+  patchHeadingDiv,
+  patchLowContrastHint,
 ];
