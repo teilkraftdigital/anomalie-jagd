@@ -5,6 +5,34 @@ Alle nennenswerten Änderungen am Projekt werden in dieser Datei dokumentiert.
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 Versionierung folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.5.3] — 2026-04-03
+
+### Hinzugefügt
+
+**Form-Szene: 5 neue Anomalien (gesamt 16)**
+
+- `patchSubmitNoType` (easy) — Absenden-Button ohne `type="submit"` — Formular kann nicht abgeschickt werden
+- `patchLowContrastLabel` (easy) — Label-Texte mit zu geringem Kontrast (`text-slate-300`, ca. 1,6:1)
+- `patchLowContrastInputs` (easy) — Eingabefeld-Rahmen mit zu geringem Kontrast (`border-slate-200`)
+- `patchHeadingDiv` (medium) — Formular-Überschrift als `<div>` statt `<h2>` — keine semantische Überschrift
+- `patchLowContrastHint` (medium) — Hinweistext unter Passwort-Wiederholung mit zu geringem Kontrast
+
+**Modell & Renderer**
+
+- Neuer Block-Typ `heading` in `FormBlock`: `{ as: "h1" | "h2" | "h3" | "div" | "p"; text?: string }` — Überschrift ist jetzt patchbar
+- `InputContent`: neue optionale Felder `labelClass`, `inputClass`, `hintClass` — Kontrast-Patches ohne Renderer-Anpassung
+- Renderer: `<h2>` nicht mehr hardcodiert — wird aus `heading`-Block gerendert; `twMerge` für alle Klassen-Felder
+
+### Geändert
+
+- Button-Szene in `App.tsx` auskommentiert — vorerst nicht aktiv
+
+### Behoben
+
+- `patchNoAutocomplete`: `autocomplete` wurde fälschlicherweise aus `attrs` entfernt — `autocomplete` ist ein direktes `InputContent`-Feld und wird jetzt korrekt auf `undefined` gesetzt
+
+---
+
 ## [0.5.2] — 2026-04-03
 
 ### Hinzugefügt
