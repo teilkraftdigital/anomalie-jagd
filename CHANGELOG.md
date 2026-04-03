@@ -5,6 +5,23 @@ Alle nennenswerten Änderungen am Projekt werden in dieser Datei dokumentiert.
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 Versionierung folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.5.2] — 2026-04-03
+
+### Hinzugefügt
+
+- `BaseLayout`-Organism: gemeinsamer Seitenwrapper mit Header (Nav + Sprachumschalter) und Footer (Version, Impressum, Datenschutz) — `StartPage` und `LevelSelectPage` nutzen ihn
+- Footer: Impressum- und Datenschutz-Links mit `ExternalLink`-Icon und `sr-only`-Hinweis „öffnet in neuem Tab"
+- `lucide-react` für Icons hinzugefügt
+- Plausible Analytics nur im Production-Build geladen (`import.meta.env.PROD`) — kein Tracking im Dev-Server
+
+### Geändert
+
+- Sprachumschalter: ein Toggle-Button → zwei separate Buttons „DE / EN" mit `aria-pressed` und `lang`-Attribut
+- Locale: neue Keys `pages.common.{back,openInNewTab,navigation}`, `pages.start.{footerImprint,footerPrivacy}`, `lang.{switchToEn,switchToDe,labelEn,labelDe}`
+- `SceneCard` / `DifficultyCard`: Schriftgrößen leicht angehoben (`text-xs` → `text-sm/base`)
+
+---
+
 ## [0.5.1] — 2026-04-03
 
 ### Geändert
