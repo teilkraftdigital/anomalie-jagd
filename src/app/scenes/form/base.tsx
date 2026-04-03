@@ -23,7 +23,9 @@ export function createFormBaseModel(): FormModel {
           autocomplete: "name",
           attrs: { id: "name" },
           validation: {
-            required: { message: f("renderer.fields.name.validation.required") },
+            required: {
+              message: f("renderer.fields.name.validation.required"),
+            },
             minLength: {
               value: 2,
               message: f("renderer.fields.name.validation.minLength"),
@@ -43,7 +45,9 @@ export function createFormBaseModel(): FormModel {
           autocomplete: "email",
           attrs: { id: "email" },
           validation: {
-            required: { message: f("renderer.fields.email.validation.required") },
+            required: {
+              message: f("renderer.fields.email.validation.required"),
+            },
             pattern: {
               value: "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
               message: f("renderer.fields.email.validation.pattern"),
@@ -64,10 +68,15 @@ export function createFormBaseModel(): FormModel {
           attrs: { id: "password" },
           revealButton: {
             as: "button",
-            attrs: { type: "button", "aria-label": f("renderer.fields.password.revealLabel") },
+            attrs: {
+              type: "button",
+              "aria-label": f("renderer.fields.password.revealLabel"),
+            },
           },
           validation: {
-            required: { message: f("renderer.fields.password.validation.required") },
+            required: {
+              message: f("renderer.fields.password.validation.required"),
+            },
             minLength: {
               value: 8,
               message: f("renderer.fields.password.validation.minLength"),
@@ -115,7 +124,10 @@ export function createFormBaseModel(): FormModel {
           required: true,
           requiredLabel: undefined,
           checkboxLabel: f("renderer.fields.agb.checkboxLabel"),
-          attrs: { id: "agb", "aria-label": f("renderer.fields.agb.checkboxLabel") },
+          attrs: {
+            id: "agb",
+            "aria-label": f("renderer.fields.agb.checkboxLabel"),
+          },
           validation: {
             required: { message: f("renderer.fields.agb.validation.required") },
           },

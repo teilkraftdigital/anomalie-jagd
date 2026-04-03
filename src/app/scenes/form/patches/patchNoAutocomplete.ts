@@ -10,7 +10,7 @@ export const patchNoAutocomplete = {
       ...model,
       blocks: model.blocks.map((block) => {
         if (block.type !== "input") return block;
-        if (block.content.attrs?.id !== "password") return block;
+        if (block.content.inputType !== "password") return block;
         return {
           ...block,
           content: { ...block.content, autocomplete: undefined },
