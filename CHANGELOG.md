@@ -5,6 +5,16 @@ Alle nennenswerten Änderungen am Projekt werden in dieser Datei dokumentiert.
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 Versionierung folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.5.5] — 2026-04-12
+
+### Geändert
+
+- `GameShell`: Browser-Chrome-Breite von `max-w-2xl` auf `max-w-4xl` erhöht — mehr Platz für die Szenen-Vorschau
+- `FormSceneRenderer`: `max-w-2xl mx-auto` auf dem `<form>`-Container — Formular ist jetzt zentriert und auf eine lesbare Breite begrenzt
+- `README`: „Neu in"-Abschnitt entfernt, stattdessen Link zum Changelog; Szenen-Tabelle aktualisiert (Button inaktiv, Formular 16 Anomalien)
+
+---
+
 ## [0.5.4] — 2026-04-03
 
 ### Geändert
