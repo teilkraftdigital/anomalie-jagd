@@ -180,7 +180,11 @@ export function FormSceneRenderer({ model }: { model: FormModel }) {
   }
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
+    <form
+      className="flex flex-col gap-4 max-w-2xl mx-auto"
+      onSubmit={handleSubmit}
+      noValidate
+    >
       {model.blocks.map((block, i) => {
         if (block.type === "heading") {
           const As = block.content.as;

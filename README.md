@@ -2,11 +2,7 @@
 
 Ein Lernspiel rund um Barrierefreiheit im Web. Spieler:innen sehen eine simulierte Webkomponente und entscheiden pro Runde: Enthält sie eine Accessibility-Anomalie oder nicht?
 
-## Neu in 0.4.x
-
-- **Quellcode-Ansicht** — Tab-Toggle im Browser-Chrome zeigt das serialisierte HTML der aktuellen Scene mit Syntax-Highlighting (Shiki). CSS-Klassen lassen sich ausblenden um den Blick auf Struktur und ARIA-Attribute zu schärfen.
-- **Pflichtfeld-Hinweis** im Registrierungsformular — neue Anomalie: Hinweis fehlt komplett
-- **Bundle-Optimierung** — Shiki wird erst geladen wenn der Quellcode-Tab geöffnet wird (~96 kB gz on demand statt beim Start)
+Alle Änderungen: [CHANGELOG.md](./CHANGELOG.md)
 
 ## Spielprinzip
 
@@ -31,7 +27,7 @@ npm run dev
 | `npm run dev` | Vite Dev-Server starten |
 | `npm run build` | Typ-Check + Build |
 | `npm run lint` | ESLint |
-| `npm test` | Vitest (49 Tests) |
+| `npm test` | Vitest |
 
 ## Debug-Modus
 
@@ -47,8 +43,7 @@ Die URLs sind bookmarkbar.
 
 | Szene | Anomalien | Beschreibung |
 |---|---|---|
-| Button | 6 | Simulierte Button-Komponente (fehlende Labels, falsche Rollen, Kontrast, …) |
-| Formular | 11 | Registrierungsformular mit Validierung (fehlende Labels, Autocomplete, Fehlerzusammenfassung, …) |
+| Formular | 16 | Registrierungsformular mit Validierung (fehlende Labels, Autocomplete, Kontrast, Fehlerzusammenfassung, …) |
 
 ## Tech Stack
 
