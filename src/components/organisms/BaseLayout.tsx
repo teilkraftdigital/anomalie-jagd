@@ -92,7 +92,7 @@ export function BaseLayout({
               </li>
               <li>
                 <a
-                  href="https://teilkraft.digital/rechtliches/datenschutzerklaerung"
+                  href="https://teilkraft.digital/rechtliches/datenschutz"
                   target="_blank"
                   className="underline hover:text-white flex items-center gap-1"
                 >
