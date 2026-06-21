@@ -21,8 +21,8 @@ export function Toolbar() {
 
   return (
     <header className="bg-slate-900 text-white px-6 py-3">
-      <div className="grid grid-cols-3 items-center gap-3">
-        <div className="flex items-center gap-4">
+      <div className="flex justify-between lg:grid lg:grid-cols-3 items-center gap-3">
+        <div className="flex sm:items-center gap-4 flex-col sm:flex-row items-start">
           <button
             onClick={handleQuit}
             aria-label={t("toolbar.quit")}
@@ -32,18 +32,18 @@ export function Toolbar() {
           </button>
           <RoundDisplay currentRound={currentRound} />
         </div>
-        <div className="flex gap-3 justify-center">
+        <div className="flex gap-3 justify-center flex-col md:flex-row">
           <button
             onClick={() => guess(true)}
             disabled={disabled}
-            className="bg-red-600 hover:bg-red-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-5 py-2 rounded-lg transition-colors"
+            className="bg-red-600 hover:bg-red-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-5 py-2 rounded-lg transition-colors text-nowrap"
           >
             {t("toolbar.anomaly")}
           </button>
           <button
             onClick={() => guess(false)}
             disabled={disabled}
-            className="bg-green-700 hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-5 py-2 rounded-lg transition-colors"
+            className="bg-green-700 hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-5 py-2 rounded-lg transition-colors text-nowrap"
           >
             {t("toolbar.noAnomaly")}
           </button>

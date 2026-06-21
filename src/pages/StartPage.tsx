@@ -9,8 +9,10 @@ export function StartPage() {
 
   return (
     <BaseLayout>
-      <h1 className="text-5xl font-bold mb-4 tracking-tight">anomalie jagd</h1>
-      <p className="text-slate-400 text-lg mb-10 max-w-md text-center">
+      <h1 className="text-3xl lg:text-5xl font-bold mb-4 tracking-tight text-center md:text-left">
+        anomalie jagd
+      </h1>
+      <p className="text-slate-400 text-lg lg:text-xl mb-10 max-w-md text-center text-balance">
         {t("pages.start.subtitle")}
       </p>
 

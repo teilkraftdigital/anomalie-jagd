@@ -124,7 +124,7 @@ export function GameLayout({
             </button>
           </div>
           <div
-            className="flex-1 bg-white rounded px-3 py-1 text-xs text-slate-500 font-mono select-none"
+            className="flex-1 bg-white rounded px-3 py-1 text-xs text-slate-500 font-mono select-none text-ellipsis overflow-hidden whitespace-nowrap"
             aria-hidden="true"
           >
             https://anomalie-jagd.local

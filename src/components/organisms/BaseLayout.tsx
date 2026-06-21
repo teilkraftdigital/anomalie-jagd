@@ -63,7 +63,7 @@ export function BaseLayout({
           {children}
         </main>
 
-        <footer className="text-slate-400 text-sm font-mono flex justify-between py-6  ">
+        <footer className="text-slate-400 text-sm font-mono flex justify-between py-6 flex-col md:flex-row text-center md:text-left gap-4">
           <div>
             v{__APP_VERSION__} - {t("pages.start.footerBy")}{" "}
             <a
@@ -73,8 +73,8 @@ export function BaseLayout({
               teil:kraft digital
             </a>
           </div>
-          <nav>
-            <ul className="flex gap-4">
+          <nav className="flex justify-center md:justify-end">
+            <ul className="flex gap-4 ">
               <li className="">
                 <a
                   href="https://teilkraft.digital/rechtliches/impressum"

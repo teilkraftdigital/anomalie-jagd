@@ -5,6 +5,12 @@ Alle nennenswerten Änderungen am Projekt werden in dieser Datei dokumentiert.
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 Versionierung folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.5.6] — 2026-06-21
+
+### Geändert
+
+- `Toolbar`, `GameShell`, `BaseLayout`, `StartPage`: Responsive Anpassungen für kleine Viewports — Elemente stapeln sich vertikal, Schriftgrößen skalieren, URL-Bar kürzt per Ellipsis ab
+
 ## [0.5.5] — 2026-04-12
 
 ### Geändert
